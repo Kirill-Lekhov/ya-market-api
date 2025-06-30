@@ -4,12 +4,9 @@ from typing import Optional
 
 from pydantic.main import BaseModel
 from pydantic.fields import Field
-from pydantic.config import ConfigDict
 
 
 class Request(BaseModel):
-	model_config = ConfigDict(serialize_by_alias=True)
-
 	region_id: int
 	page: Optional[int] = None
 	page_size: Optional[int] = Field(default=None, serialization_alias="pageSize")

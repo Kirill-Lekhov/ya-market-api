@@ -19,7 +19,10 @@ class AsyncGuideRegionAPI(AsyncAPIMixin, BaseGuideRegionAPI):
 	async def search_region(self, request: RegionSearchRequest) -> RegionSearchResponse:
 		url = self.router.region_search()
 
-		async with self.session.get(url=url, params=request.model_dump(exclude_defaults=True)) as response:
+		async with self.session.get(
+			url=url,
+			params=request.model_dump(exclude_defaults=True, by_alias=True),
+		) as response:
 			self.validate_response(response)
 			return RegionSearchResponse.model_validate_json(await response.text())
 
@@ -35,7 +38,7 @@ class AsyncGuideRegionAPI(AsyncAPIMixin, BaseGuideRegionAPI):
 
 		async with self.session.get(
 			url=url,
-			params=request.model_dump(exclude={"region_id"}, exclude_defaults=True),
+			params=request.model_dump(exclude={"region_id"}, exclude_defaults=True, by_alias=True),
 		) as response:
 			self.validate_response(response)
 			return RegionChildrenResponse.model_validate_json(await response.text())
