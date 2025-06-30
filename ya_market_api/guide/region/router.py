@@ -1,7 +1,6 @@
+from ya_market_api.generic.functools import cache
 from ya_market_api.base.router import Router
 from ya_market_api.const import BASE_URL
-
-from functools import cache
 
 
 class GuideRegionRouter(Router):
