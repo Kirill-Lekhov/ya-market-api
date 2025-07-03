@@ -1,0 +1,72 @@
+from ya_market_api.base.sync_api_mixin import SyncAPIMixin
+from ya_market_api.feedback.base_api import BaseFeedbackAPI
+from ya_market_api.feedback.dataclass.list import Request as FeedbackListRequest, Response as FeedbackListResponse
+from ya_market_api.feedback.dataclass.comment_list import (
+	Request as FeedbackCommentListRequest, Response as FeedbackCommentListResponse,
+)
+from ya_market_api.feedback.dataclass.comment_add import (
+	Request as FeedbackCommentAddRequest, Response as FeedbackCommentAddResponse,
+)
+from ya_market_api.feedback.dataclass.comment_update import (
+	Request as FeedbackCommentUpdateRequest, Response as FeedbackCommentUpdateResponse,
+)
+from ya_market_api.feedback.dataclass.comment_delete import (
+	Request as FeedbackCommentDeleteRequest, Response as FeedbackCommentDeleteResponse,
+)
+from ya_market_api.feedback.dataclass.reaction_skip import (
+	Request as FeedbackReactionSkipRequest, Response as FeedbackReactionSkipResponse,
+)
+
+from typing import Optional
+
+from requests import Session
+
+
+class SyncFeedbackAPI(SyncAPIMixin, BaseFeedbackAPI):
+	def __init__(self, session: Session, business_id: Optional[int] = None) -> None:
+		super().__init__(session, business_id=business_id)
+
+	def get_feedback_list(self, request: Optional[FeedbackListRequest] = None) -> FeedbackListResponse:
+		request = request or FeedbackListRequest()
+		url = self.router.feedback_list(self.business_id)
+		response = self.session.post(
+			url=url,
+			params=request.model_dump_request_params(),
+			json=request.model_dump_request_payload(),
+		)
+		self.validate_response(response)
+		return FeedbackListResponse.model_validate_json(response.text)
+
+	def get_feedback_comment_list(self, request: FeedbackCommentListRequest) -> FeedbackCommentListResponse:
+		url = self.router.feedback_comment_list(self.business_id)
+		response = self.session.post(
+			url=url,
+			params=request.model_dump_request_params(),
+			json=request.model_dump_request_payload(),
+		)
+		self.validate_response(response)
+		return FeedbackCommentListResponse.model_validate_json(response.text)
+
+	def add_feedback_comment(self, request: FeedbackCommentAddRequest) -> FeedbackCommentAddResponse:
+		url = self.router.feedback_comment_add(self.business_id)
+		response = self.session.post(url=url, json=request.model_dump(by_alias=True, exclude_defaults=True))
+		self.validate_response(response)
+		return FeedbackCommentAddResponse.model_validate_json(response.text)
+
+	def update_feedback_comment(self, request: FeedbackCommentUpdateRequest) -> FeedbackCommentUpdateResponse:
+		url = self.router.feedback_comment_update(self.business_id)
+		response = self.session.post(url=url, json=request.model_dump(by_alias=True, exclude_defaults=True))
+		self.validate_response(response)
+		return FeedbackCommentUpdateResponse.model_validate_json(response.text)
+
+	def delete_feedback_comment(self, request: FeedbackCommentDeleteRequest) -> FeedbackCommentDeleteResponse:
+		url = self.router.feedback_comment_delete(self.business_id)
+		response = self.session.post(url, json=request.model_dump(by_alias=True, exclude_defaults=True))
+		self.validate_response(response)
+		return FeedbackCommentDeleteResponse.model_validate_json(response.text)
+
+	def skip_feedback_reaction(self, request: FeedbackReactionSkipRequest) -> FeedbackReactionSkipResponse:
+		url = self.router.feedback_reaction_skip(self.business_id)
+		response = self.session.post(url, json=request.model_dump(by_alias=True, exclude_defaults=True))
+		self.validate_response(response)
+		return FeedbackReactionSkipResponse.model_validate_json(response.text)
