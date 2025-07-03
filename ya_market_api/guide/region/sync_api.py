@@ -1,10 +1,8 @@
 from ya_market_api.base.sync_api_mixin import SyncAPIMixin
 from ya_market_api.guide.region.base_api import BaseGuideRegionAPI
-from ya_market_api.guide.region.dataclass.countries import Response as RegionCountriesResponse
-from ya_market_api.guide.region.dataclass.search import Request as RegionSearchRequest, Response as RegionSearchResponse
-from ya_market_api.guide.region.dataclass.info import Response as RegionInfoResponse
-from ya_market_api.guide.region.dataclass.children import (
-	Request as RegionChildrenRequest, Response as RegionChildrenResponse,
+from ya_market_api.guide.region.dataclass import (
+	RegionCountriesResponse, RegionSearchRequest, RegionSearchResponse, RegionInfoResponse, RegionChildrenRequest,
+	RegionChildrenResponse,
 )
 
 

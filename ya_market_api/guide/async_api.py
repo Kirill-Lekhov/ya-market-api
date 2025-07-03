@@ -1,7 +1,6 @@
 from ya_market_api.base.async_api_mixin import AsyncAPIMixin
 from ya_market_api.guide.base_api import BaseGuideAPI
-from ya_market_api.guide.dataclass.token_info import Response as TokenInfoResponse
-from ya_market_api.guide.dataclass.delivery_services import Response as DeliveryServicesResponse
+from ya_market_api.guide.dataclass import TokenInfoResponse, DeliveryServicesResponse
 from ya_market_api.guide.region.async_api import AsyncGuideRegionAPI
 
 from aiohttp.client import ClientSession
