@@ -1,3 +1,5 @@
+from ya_market_api.exception import InvalidResponseError
+
 from http import HTTPStatus
 
 from aiohttp.client import ClientSession, ClientResponse
@@ -13,4 +15,4 @@ class AsyncAPIMixin:
 
 	def validate_response(self, response: ClientResponse) -> None:
 		if response.status != HTTPStatus.OK:
-			raise RuntimeError("Response is not valid")
+			raise InvalidResponseError("Response is not valid")

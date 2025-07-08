@@ -70,7 +70,7 @@ class Request(BaseModel):
 			result = {self.S11N_ALIAS_COMMENT_IDS: result[self.S11N_ALIAS_COMMENT_IDS]}
 
 		if len(result) == 0:
-			raise RuntimeError("feedback_id or comment_ids are required")
+			raise ValueError("feedback_id or comment_ids are required")
 
 		return result
 

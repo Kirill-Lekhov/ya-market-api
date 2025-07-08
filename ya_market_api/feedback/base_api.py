@@ -1,4 +1,5 @@
 from ya_market_api.base.api import API
+from ya_market_api.exception import BusinessIdError
 from ya_market_api.feedback.router import FeedbackRouter
 
 from typing import Optional
@@ -12,7 +13,7 @@ class BaseFeedbackAPI(API[FeedbackRouter]):
 	@property
 	def business_id(self) -> int:
 		if self._business_id is None:
-			raise RuntimeError("The business_id was not specified")
+			raise BusinessIdError("The business_id was not specified")
 
 		return self._business_id
 

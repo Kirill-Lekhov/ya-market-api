@@ -1,3 +1,5 @@
+from ya_market_api.exception import InvalidResponseError
+
 from http import HTTPStatus
 
 from requests.sessions import Session
@@ -14,4 +16,4 @@ class SyncAPIMixin:
 
 	def validate_response(self, response: Response) -> None:
 		if response.status_code != HTTPStatus.OK:
-			raise RuntimeError("Response is not valid")
+			raise InvalidResponseError("Response is not valid")
