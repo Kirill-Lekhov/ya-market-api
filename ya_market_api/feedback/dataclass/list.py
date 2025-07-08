@@ -96,7 +96,7 @@ class Request(BaseModel):
 			return value
 
 		for i in value:
-			if i < 0 or i > 5:
+			if i < 1 or i > 5:
 				raise ValueError(f"{i} is not valid rating value. Must be in range [1..5]")
 
 		return value
