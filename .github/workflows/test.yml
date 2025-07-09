@@ -7,7 +7,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
         python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
@@ -17,13 +17,12 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
-    - run: pip install poetry
+    - run: pip install uv
     - run: script/setup
     - run: script/cibuild
-    - uses: actions/upload-artifact@v3
-      if: always()
+    - uses: actions/upload-artifact@v4
       with:
-        name: coverage-report
+        name: coverage-report-${{ matrix.python-version }}
         path: htmlcov/
         retention-days: 30
     - name: Upload coverage reports to Codecov
