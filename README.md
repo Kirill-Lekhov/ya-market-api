@@ -1,4 +1,4 @@
-# ya-market-api
+# ya-market-api [![codecov](https://codecov.io/gh/Kirill-Lekhov/ya-market-api/graph/badge.svg?token=2S6OTYCJF8)](https://codecov.io/gh/Kirill-Lekhov/ya-market-api)
 Python3 client for public API of yandex market
 
 ## Installation
