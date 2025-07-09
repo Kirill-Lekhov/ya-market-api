@@ -10,7 +10,7 @@ from pydantic.fields import Field
 
 class RequestComment(BaseModel):
 	id: int
-	text: str
+	text: str = Field(min_length=1)
 
 
 class Request(BaseModel):
