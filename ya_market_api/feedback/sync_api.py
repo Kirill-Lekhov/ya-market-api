@@ -51,12 +51,12 @@ class SyncFeedbackAPI(SyncAPIMixin, BaseFeedbackAPI):
 
 	def delete_feedback_comment(self, request: FeedbackCommentDeleteRequest) -> FeedbackCommentDeleteResponse:
 		url = self.router.feedback_comment_delete(self.business_id)
-		response = self.session.post(url, json=request.model_dump(by_alias=True, exclude_defaults=True))
+		response = self.session.post(url=url, json=request.model_dump(by_alias=True, exclude_defaults=True))
 		self.validate_response(response)
 		return FeedbackCommentDeleteResponse.model_validate_json(response.text)
 
 	def skip_feedback_reaction(self, request: FeedbackReactionSkipRequest) -> FeedbackReactionSkipResponse:
 		url = self.router.feedback_reaction_skip(self.business_id)
-		response = self.session.post(url, json=request.model_dump(by_alias=True, exclude_defaults=True))
+		response = self.session.post(url=url, json=request.model_dump(by_alias=True, exclude_defaults=True))
 		self.validate_response(response)
 		return FeedbackReactionSkipResponse.model_validate_json(response.text)
