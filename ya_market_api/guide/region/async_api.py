@@ -1,8 +1,8 @@
 from ya_market_api.base.async_api_mixin import AsyncAPIMixin
 from ya_market_api.guide.region.base_api import BaseGuideRegionAPI
 from ya_market_api.guide.region.dataclass import (
-	RegionCountriesResponse, RegionSearchRequest, RegionSearchResponse, RegionInfoResponse, RegionChildrenRequest,
-	RegionChildrenResponse,
+	RegionCountriesResponse, RegionSearchRequest, RegionSearchResponse, RegionInfoRequest, RegionInfoResponse,
+	RegionChildrenRequest, RegionChildrenResponse,
 )
 
 
@@ -24,8 +24,8 @@ class AsyncGuideRegionAPI(AsyncAPIMixin, BaseGuideRegionAPI):
 			self.validate_response(response)
 			return RegionSearchResponse.model_validate_json(await response.text())
 
-	async def get_region_info(self, region_id: int) -> RegionInfoResponse:
-		url = self.router.region_info(region_id)
+	async def get_region_info(self, request: RegionInfoRequest) -> RegionInfoResponse:
+		url = self.router.region_info(request.region_id)
 
 		async with self.session.get(url=url) as response:
 			self.validate_response(response)

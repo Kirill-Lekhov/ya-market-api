@@ -1,8 +1,8 @@
 from ya_market_api.base.sync_api_mixin import SyncAPIMixin
 from ya_market_api.guide.region.base_api import BaseGuideRegionAPI
 from ya_market_api.guide.region.dataclass import (
-	RegionCountriesResponse, RegionSearchRequest, RegionSearchResponse, RegionInfoResponse, RegionChildrenRequest,
-	RegionChildrenResponse,
+	RegionCountriesResponse, RegionSearchRequest, RegionSearchResponse, RegionInfoRequest, RegionInfoResponse,
+	RegionChildrenRequest, RegionChildrenResponse,
 )
 
 
@@ -19,8 +19,8 @@ class SyncGuideRegionAPI(SyncAPIMixin, BaseGuideRegionAPI):
 		self.validate_response(response)
 		return RegionSearchResponse.model_validate_json(response.text)
 
-	def get_region_info(self, region_id: int) -> RegionInfoResponse:
-		url = self.router.region_info(region_id)
+	def get_region_info(self, request: RegionInfoRequest) -> RegionInfoResponse:
+		url = self.router.region_info(request.region_id)
 		response = self.session.get(url=url)
 		self.validate_response(response)
 		return RegionInfoResponse.model_validate_json(response.text)
