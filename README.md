@@ -140,6 +140,7 @@ response = api.feedback.get_feedback_list(request)
 ```
 
 See signature of the FeedbackListRequest class and the docs to get info about all available params.
+
 Docs: https://yandex.ru/dev/market/partner-api/doc/ru/reference/goods-feedback/getGoodsFeedbacks
 
 ### Get feedback comment list
@@ -155,6 +156,7 @@ response = api.feedback.get_feedback_comment_list(request)
 ```
 
 See signature of the FeedbackCommentListRequest class and the docs to get info about all available params.
+
 Docs: https://yandex.ru/dev/market/partner-api/doc/ru/reference/goods-feedback/getGoodsFeedbackComments
 
 ### Add feedback comment
