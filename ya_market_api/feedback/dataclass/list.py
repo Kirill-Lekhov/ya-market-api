@@ -26,7 +26,7 @@ class Request(BaseModel):
 	datetime_to: Optional[Arrow] = Field(default=None, serialization_alias="dateTimeTo")
 	paid: Optional[bool] = None
 	rating_values: Optional[Collection[int]] = Field(default=None, serialization_alias="ratingValues")
-	rating_status: Optional[ReactionStatus] = Field(default=None, serialization_alias="ratingStatus")
+	reaction_status: Optional[ReactionStatus] = Field(default=None, serialization_alias="reactionStatus")
 
 	feedback_ids: Optional[Collection[int]] = Field(
 		default=None,
@@ -53,7 +53,7 @@ class Request(BaseModel):
 		datetime_to: Optional[Arrow] = None,
 		paid: Optional[bool] = None,
 		rating_values: Optional[Collection[int]] = None,
-		rating_status: Optional[Collection[int]] = None,
+		reaction_status: Optional[Collection[int]] = None,
 	) -> None: ...
 	def __init__(
 		self,
@@ -65,7 +65,7 @@ class Request(BaseModel):
 		datetime_to: Optional[Arrow] = None,
 		paid: Optional[bool] = None,
 		rating_values: Optional[Collection[int]] = None,
-		rating_status: Optional[Collection[int]] = None,
+		reaction_status: Optional[Collection[int]] = None,
 	) -> None:
 		super().__init__(
 			limit=limit,
@@ -75,7 +75,7 @@ class Request(BaseModel):
 			datetime_to=datetime_to,
 			paid=paid,
 			rating_values=rating_values,
-			rating_status=rating_status,
+			reaction_status=reaction_status,
 		)
 
 	@field_validator("limit", mode="after")
