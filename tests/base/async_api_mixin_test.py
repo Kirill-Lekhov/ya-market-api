@@ -1,4 +1,5 @@
 from ya_market_api.base.async_api_mixin import AsyncAPIMixin
+from ya_market_api.base.async_config import AsyncConfig
 from ya_market_api.exception import InvalidResponseError, AuthorizationError, NotFoundError
 
 from unittest.mock import Mock
@@ -7,6 +8,15 @@ from typing import Optional, Type
 
 import pytest
 from aiohttp.client import ClientSession
+
+
+class BaseClient:
+	def __init__(self, *args, **kwargs) -> None:
+		pass
+
+
+class Client(AsyncAPIMixin, BaseClient):
+	pass
 
 
 class TestAsyncAPIMixin:
@@ -28,7 +38,8 @@ class TestAsyncAPIMixin:
 		expected_error_text: Optional[str],
 	):
 		session = ClientSession()
-		api = AsyncAPIMixin(session)
+		config = AsyncConfig(session, None, "")
+		api = Client(config)
 		response = Mock()
 		response.status = status
 		response.ok = status < 400

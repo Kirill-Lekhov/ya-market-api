@@ -1,7 +1,8 @@
-from ya_market_api.const import Header
+from ya_market_api.const import Header, BASE_URL
 from ya_market_api.generic.requests.auth import APIKeyAuth
 from ya_market_api.guide.sync_api import SyncGuideAPI
 from ya_market_api.feedback.sync_api import SyncFeedbackAPI
+from ya_market_api.base.sync_config import SyncConfig
 
 from typing import Optional
 
@@ -11,18 +12,22 @@ from requests.sessions import Session
 class SyncAPI:
 	guide: SyncGuideAPI
 	feedback: SyncFeedbackAPI
-	session: Session
+	config: SyncConfig
 
-	def __init__(self, session: Session, *, business_id: Optional[int] = None) -> None:
-		self.session = session
-		self.guide = SyncGuideAPI(session)
-		self.feedback = SyncFeedbackAPI(session, business_id)
+	def __init__(self, config: SyncConfig) -> None:
+		self.config = config
+		self.guide = SyncGuideAPI(config)
+		self.feedback = SyncFeedbackAPI(config)
 
 	@classmethod
-	def build(cls, api_key: str, *, business_id: Optional[int] = None) -> "SyncAPI":
-		session = cls.make_session(api_key)
+	def build(cls, api_key: str, *, business_id: Optional[int] = None, base_url: str = BASE_URL) -> "SyncAPI":
+		config = SyncConfig(
+			cls.make_session(api_key),
+			business_id,
+			base_url,
+		)
 
-		return cls(session, business_id=business_id)
+		return cls(config)
 
 	@staticmethod
 	def make_session(api_key: str) -> Session:

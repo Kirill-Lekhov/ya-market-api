@@ -9,12 +9,8 @@ from ya_market_api.feedback.dataclass import (
 
 from typing import Optional
 
-from aiohttp.client import ClientSession
-
 
 class AsyncFeedbackAPI(AsyncAPIMixin, BaseFeedbackAPI):
-	def __init__(self, session: ClientSession, business_id: Optional[int] = None) -> None:
-		super().__init__(session, business_id=business_id)
 
 	async def get_feedback_list(self, request: Optional[FeedbackListRequest] = None) -> FeedbackListResponse:
 		request = request or FeedbackListRequest()

@@ -1,5 +1,6 @@
 from ya_market_api.guide.sync_api import SyncGuideAPI
 from ya_market_api.guide.region.sync_api import SyncGuideRegionAPI
+from ya_market_api.base.sync_config import SyncConfig
 
 from unittest.mock import Mock, patch
 
@@ -9,7 +10,8 @@ from requests.sessions import Session
 class TestSyncGuideAPI:
 	def test___init__(self):
 		session = Session()
-		api = SyncGuideAPI(session)
+		config = SyncConfig(session, 1, "")
+		api = SyncGuideAPI(config)
 		assert isinstance(api.region, SyncGuideRegionAPI)
 		assert api.region.session is session
 
@@ -18,7 +20,8 @@ class TestSyncGuideAPI:
 		session.post = Mock()
 		session.post.return_value = Mock()
 		session.post.return_value.text = "TEXT"
-		api = SyncGuideAPI(session)
+		config = SyncConfig(session, 1, "")
+		api = SyncGuideAPI(config)
 
 		with patch("ya_market_api.guide.sync_api.TokenInfoResponse") as TokenInfoResponseMock:
 			TokenInfoResponseMock.model_validate_json = Mock()
@@ -35,7 +38,8 @@ class TestSyncGuideAPI:
 		session.get = Mock()
 		session.get.return_value = Mock()
 		session.get.return_value.text = "TEXT"
-		api = SyncGuideAPI(session)
+		config = SyncConfig(session, 1, "")
+		api = SyncGuideAPI(config)
 
 		with patch("ya_market_api.guide.sync_api.DeliveryServicesResponse") as DeliveryServicesResponseMock:
 			DeliveryServicesResponseMock.model_validate_json = Mock()

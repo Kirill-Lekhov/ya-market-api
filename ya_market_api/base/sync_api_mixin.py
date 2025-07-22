@@ -1,4 +1,5 @@
 from ya_market_api.exception import InvalidResponseError, AuthorizationError, NotFoundError
+from ya_market_api.base.sync_config import SyncConfig
 
 from http import HTTPStatus
 
@@ -7,12 +8,11 @@ from requests.models import Response
 
 
 class SyncAPIMixin:
-	session: Session
+	config: SyncConfig
 
-	def __init__(self, session: Session, *args, **kwargs) -> None:
-		super().__init__(*args, **kwargs)
-
-		self.session = session
+	@property
+	def session(self) -> Session:
+		return self.config.session
 
 	def validate_response(self, response: Response) -> None:
 		if not response.ok:

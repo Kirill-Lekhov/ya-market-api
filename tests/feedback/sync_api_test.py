@@ -3,6 +3,7 @@ from ya_market_api.feedback.dataclass import (
 	FeedbackListRequest, FeedbackCommentListRequest, FeedbackCommentAddRequest, FeedbackCommentUpdateRequest,
 	FeedbackCommentDeleteRequest, FeedbackReactionSkipRequest,
 )
+from ya_market_api.base.sync_config import SyncConfig
 
 from unittest.mock import patch, Mock
 
@@ -13,7 +14,8 @@ class TestSyncFeedbackAPI:
 		session.post = Mock()
 		session.post.return_value = Mock()
 		session.post.return_value.text = "RAW DATA"
-		api = SyncFeedbackAPI(session, business_id=1)
+		config = SyncConfig(session, 1, "")
+		api = SyncFeedbackAPI(config)
 		request = FeedbackListRequest(limit=50, page_token="page-token", feedback_ids=(1, 2, 3))
 
 		with patch("ya_market_api.feedback.sync_api.FeedbackListResponse") as FeedbackListResponseMock:
@@ -27,8 +29,6 @@ class TestSyncFeedbackAPI:
 				session.post.assert_called_once_with(url=api.router.feedback_list(1), params={}, json={})
 
 				session.post.reset_mock()
-				# session.post.return_value = Mock()
-				# session.post.return_value = "RAW DATA"
 				assert api.get_feedback_list(request) == "DESERIALIZED DATA"
 				session.post.assert_called_once_with(
 					url=api.router.feedback_list(1),
@@ -41,7 +41,8 @@ class TestSyncFeedbackAPI:
 		session.post = Mock()
 		session.post.return_value = Mock()
 		session.post.return_value.text = "RAW DATA"
-		api = SyncFeedbackAPI(session, business_id=1)
+		config = SyncConfig(session, 1, "")
+		api = SyncFeedbackAPI(config)
 		request = FeedbackCommentListRequest(comment_ids=(1, 2, 3), limit=50, page_token="page-token")
 
 		with patch("ya_market_api.feedback.sync_api.FeedbackCommentListResponse") as FeedbackCommentListResponseMock:
@@ -63,7 +64,8 @@ class TestSyncFeedbackAPI:
 		session.post = Mock()
 		session.post.return_value = Mock()
 		session.post.return_value.text = "RAW DATA"
-		api = SyncFeedbackAPI(session, business_id=1)
+		config = SyncConfig(session, 1, "")
+		api = SyncFeedbackAPI(config)
 		request = FeedbackCommentAddRequest.create(512, "COMMENT", 1024)
 
 		with patch("ya_market_api.feedback.sync_api.FeedbackCommentAddResponse") as FeedbackCommentAddResponseMock:
@@ -84,7 +86,8 @@ class TestSyncFeedbackAPI:
 		session.post = Mock()
 		session.post.return_value = Mock()
 		session.post.return_value.text = "RAW DATA"
-		api = SyncFeedbackAPI(session, business_id=1)
+		config = SyncConfig(session, 1, "")
+		api = SyncFeedbackAPI(config)
 		request = FeedbackCommentUpdateRequest.create(512, 1024, "COMMENT")
 
 		with patch("ya_market_api.feedback.sync_api.FeedbackCommentUpdateResponse") as FeedbackCommentUpdateResponseMock:
@@ -105,7 +108,8 @@ class TestSyncFeedbackAPI:
 		session.post = Mock()
 		session.post.return_value = Mock()
 		session.post.return_value.text = "RAW DATA"
-		api = SyncFeedbackAPI(session, business_id=1)
+		config = SyncConfig(session, 1, "")
+		api = SyncFeedbackAPI(config)
 		request = FeedbackCommentDeleteRequest(id=512)
 
 		with patch("ya_market_api.feedback.sync_api.FeedbackCommentDeleteResponse") as FeedbackCommentDeleteResponseMock:
@@ -126,7 +130,8 @@ class TestSyncFeedbackAPI:
 		session.post = Mock()
 		session.post.return_value = Mock()
 		session.post.return_value.text = "RAW DATA"
-		api = SyncFeedbackAPI(session, business_id=1)
+		config = SyncConfig(session, 1, "")
+		api = SyncFeedbackAPI(config)
 		request = FeedbackReactionSkipRequest(feedback_ids=(1, 2, 3))
 
 		with patch("ya_market_api.feedback.sync_api.FeedbackReactionSkipResponse") as FeedbackReactionSkipResponseMock:

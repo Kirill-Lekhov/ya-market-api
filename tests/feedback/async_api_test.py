@@ -4,6 +4,7 @@ from ya_market_api.feedback.dataclass import (
 	FeedbackListRequest, FeedbackCommentListRequest, FeedbackCommentAddRequest, FeedbackCommentUpdateRequest,
 	FeedbackCommentDeleteRequest, FeedbackReactionSkipRequest,
 )
+from ya_market_api.base.async_config import AsyncConfig
 
 from unittest.mock import patch, Mock
 
@@ -14,7 +15,8 @@ class TestAsyncFeedbackAPI:
 	@pytest.mark.asyncio()
 	async def test_get_feedback_list(self):
 		session = FakeAsyncSession("RAW DATA")
-		api = AsyncFeedbackAPI(session, 1)		# type: ignore - for testing purposes
+		config = AsyncConfig(session, 1, "")		# type: ignore - for testing purposes
+		api = AsyncFeedbackAPI(config)
 		request = FeedbackListRequest(limit=50, page_token="page-token", feedback_ids=(1, 2, 3))
 
 		with patch("ya_market_api.feedback.async_api.FeedbackListResponse") as FeedbackListResponseMock:
@@ -39,7 +41,8 @@ class TestAsyncFeedbackAPI:
 	@pytest.mark.asyncio()
 	async def test_get_feedback_comment_list(self):
 		session = FakeAsyncSession("RAW DATA")
-		api = AsyncFeedbackAPI(session, 1)		# type: ignore - for testing purposes
+		config = AsyncConfig(session, 1, "")		# type: ignore - for testing purposes
+		api = AsyncFeedbackAPI(config)
 		request = FeedbackCommentListRequest(limit=50, page_token="page-token", comment_ids=(1, 2, 3))
 
 		with patch("ya_market_api.feedback.async_api.FeedbackCommentListResponse") as FeedbackCommentListResponseMock:
@@ -58,7 +61,8 @@ class TestAsyncFeedbackAPI:
 	@pytest.mark.asyncio()
 	async def test_add_feedback_comment(self):
 		session = FakeAsyncSession("RAW DATA")
-		api = AsyncFeedbackAPI(session, 1)		# type: ignore - for testing purposes
+		config = AsyncConfig(session, 1, "")		# type: ignore - for testing purposes
+		api = AsyncFeedbackAPI(config)
 		request = FeedbackCommentAddRequest.create(512, "COMMENT", 1024)
 
 		with patch("ya_market_api.feedback.async_api.FeedbackCommentAddResponse") as FeedbackCommentAddResponse:
@@ -76,7 +80,8 @@ class TestAsyncFeedbackAPI:
 	@pytest.mark.asyncio()
 	async def test_update_feedback_comment(self):
 		session = FakeAsyncSession("RAW DATA")
-		api = AsyncFeedbackAPI(session, 1)		# type: ignore - for testing purposes
+		config = AsyncConfig(session, 1, "")		# type: ignore - for testing purposes
+		api = AsyncFeedbackAPI(config)
 		request = FeedbackCommentUpdateRequest.create(512, 1024, "COMMENT")
 
 		with patch("ya_market_api.feedback.async_api.FeedbackCommentUpdateResponse") as FeedbackCommentUpdateResponse:
@@ -94,7 +99,8 @@ class TestAsyncFeedbackAPI:
 	@pytest.mark.asyncio()
 	async def test_delete_feedback_comment(self):
 		session = FakeAsyncSession("RAW DATA")
-		api = AsyncFeedbackAPI(session, 1)		# type: ignore - for testing purposes
+		config = AsyncConfig(session, 1, "")		# type: ignore - for testing purposes
+		api = AsyncFeedbackAPI(config)
 		request = FeedbackCommentDeleteRequest(id=512)
 
 		with patch("ya_market_api.feedback.async_api.FeedbackCommentDeleteResponse") as FeedbackCommentDeleteResponse:
@@ -112,7 +118,8 @@ class TestAsyncFeedbackAPI:
 	@pytest.mark.asyncio()
 	async def test_skip_feedback_reaction(self):
 		session = FakeAsyncSession("RAW DATA")
-		api = AsyncFeedbackAPI(session, 1)		# type: ignore - for testing purposes
+		config = AsyncConfig(session, 1, "")		# type: ignore - for testing purposes
+		api = AsyncFeedbackAPI(config)
 		request = FeedbackReactionSkipRequest(feedback_ids=(1, 2, 3))
 
 		with patch("ya_market_api.feedback.async_api.FeedbackReactionSkipResponse") as FeedbackReactionSkipResponse:

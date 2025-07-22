@@ -1,15 +1,14 @@
 from ya_market_api.base.async_api_mixin import AsyncAPIMixin
+from ya_market_api.base.async_config import AsyncConfig
 from ya_market_api.guide.base_api import BaseGuideAPI
 from ya_market_api.guide.dataclass import TokenInfoResponse, DeliveryServicesResponse
 from ya_market_api.guide.region.async_api import AsyncGuideRegionAPI
 
-from aiohttp.client import ClientSession
-
 
 class AsyncGuideAPI(AsyncAPIMixin, BaseGuideAPI):
-	def __init__(self, session: ClientSession, *args, **kwargs) -> None:
-		super().__init__(session, *args, **kwargs)
-		self.region = AsyncGuideRegionAPI(session, *args, **kwargs)
+	def __init__(self, config: AsyncConfig) -> None:
+		super().__init__(config)
+		self.region = AsyncGuideRegionAPI(config)
 
 	async def get_token_info(self) -> TokenInfoResponse:
 		url = self.router.token_info()

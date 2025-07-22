@@ -1,6 +1,7 @@
-from ya_market_api.const import Header
+from ya_market_api.const import Header, BASE_URL
 from ya_market_api.guide.async_api import AsyncGuideAPI
 from ya_market_api.feedback.async_api import AsyncFeedbackAPI
+from ya_market_api.base.async_config import AsyncConfig
 
 from typing import Optional
 
@@ -10,18 +11,25 @@ from aiohttp.client import ClientSession
 class AsyncAPI:
 	guide: AsyncGuideAPI
 	feedback: AsyncFeedbackAPI
-	session: ClientSession
+	config: AsyncConfig
 
-	def __init__(self, session: ClientSession, *, business_id: Optional[int] = None) -> None:
-		self.session = session
-		self.guide = AsyncGuideAPI(session)
-		self.feedback = AsyncFeedbackAPI(session, business_id)
+	def __init__(self, config: AsyncConfig) -> None:
+		self.config = config
+		self.guide = AsyncGuideAPI(config)
+		self.feedback = AsyncFeedbackAPI(config)
+
+	async def close(self) -> None:
+		await self.config.session.close()
 
 	@classmethod
-	async def build(cls, api_key: str, *, business_id: Optional[int] = None) -> "AsyncAPI":
-		session = await cls.make_session(api_key)
+	async def build(cls, api_key: str, *, business_id: Optional[int] = None, base_url: str = BASE_URL) -> "AsyncAPI":
+		config = AsyncConfig(
+			await cls.make_session(api_key),
+			business_id,
+			base_url,
+		)
 
-		return cls(session, business_id=business_id)
+		return cls(config)
 
 	@staticmethod
 	async def make_session(api_key: str) -> ClientSession:

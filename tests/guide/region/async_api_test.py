@@ -1,6 +1,7 @@
 from tests.fake_async_session import FakeAsyncSession
 from ya_market_api.guide.region.async_api import AsyncGuideRegionAPI
 from ya_market_api.guide.region.dataclass import RegionSearchRequest, RegionInfoRequest, RegionChildrenRequest
+from ya_market_api.base.async_config import AsyncConfig
 
 from unittest.mock import patch, Mock
 
@@ -11,7 +12,8 @@ class TestAsyncGuideRegionAPI:
 	@pytest.mark.asyncio()
 	async def test_get_region_countries(self):
 		session = FakeAsyncSession("RAW DATA")
-		api = AsyncGuideRegionAPI(session)		# type: ignore - for testing purposes
+		config = AsyncConfig(session, 1, "")		# type: ignore - for testing purposes
+		api = AsyncGuideRegionAPI(config)
 
 		with patch("ya_market_api.guide.region.async_api.RegionCountriesResponse") as RegionCountriesResponseMock:
 			RegionCountriesResponseMock.model_validate_json = Mock()
@@ -28,7 +30,8 @@ class TestAsyncGuideRegionAPI:
 	@pytest.mark.asyncio()
 	async def test_get_search_region(self):
 		session = FakeAsyncSession("RAW DATA")
-		api = AsyncGuideRegionAPI(session)		# type: ignore - for testing purposes
+		config = AsyncConfig(session, 1, "")		# type: ignore - for testing purposes
+		api = AsyncGuideRegionAPI(config)
 		request = RegionSearchRequest(name="REGION_NAME", limit=100, page_token="PAGE_TOKEN")
 
 		with patch("ya_market_api.guide.region.async_api.RegionSearchResponse") as RegionSearchResponseMock:
@@ -46,7 +49,8 @@ class TestAsyncGuideRegionAPI:
 	@pytest.mark.asyncio()
 	async def test_get_region_info(self):
 		session = FakeAsyncSession("RAW DATA")
-		api = AsyncGuideRegionAPI(session)		# type: ignore - for testing purposes
+		config = AsyncConfig(session, 1, "")		# type: ignore - for testing purposes
+		api = AsyncGuideRegionAPI(config)
 		request = RegionInfoRequest(region_id=512)
 
 		with patch("ya_market_api.guide.region.async_api.RegionInfoResponse") as RegionInfoResponseMock:
@@ -63,7 +67,8 @@ class TestAsyncGuideRegionAPI:
 	@pytest.mark.asyncio()
 	async def test_get_region_children(self):
 		session = FakeAsyncSession("RAW DATA")
-		api = AsyncGuideRegionAPI(session)		# type: ignore - for testing purposes
+		config = AsyncConfig(session, 1, "")		# type: ignore - for testing purposes
+		api = AsyncGuideRegionAPI(config)
 		request = RegionChildrenRequest(region_id=512, page=1, page_size=100)
 
 		with patch("ya_market_api.guide.region.async_api.RegionChildrenResponse") as RegionChildrenResponseMock:

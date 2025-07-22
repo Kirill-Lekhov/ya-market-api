@@ -23,6 +23,7 @@ def main() -> None:
 	api = SyncAPI.build(
 		api_key="...",
 		business_id=...,		# (optional) required for the Feedback API
+		base_url=...,		# (optional) may be used for test circuits
 	)
 
 	# Do things here...
@@ -32,11 +33,12 @@ async def main() -> None:
 	api = await AsyncAPI.build(
 		api_key="...",
 		business_id=...,		# (optional) required for the Feedback API
+		base_url=...,		# (optional) may be used for test circuits
 	)
 
 	# Do things here...
 
-	await api.session.close()
+	await api.close()
 ```
 
 ## Where can I get api key?

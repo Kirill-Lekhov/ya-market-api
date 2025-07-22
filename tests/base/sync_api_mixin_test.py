@@ -1,4 +1,5 @@
 from ya_market_api.base.sync_api_mixin import SyncAPIMixin
+from ya_market_api.base.sync_config import SyncConfig
 from ya_market_api.exception import InvalidResponseError, AuthorizationError, NotFoundError
 
 from http import HTTPStatus
@@ -7,6 +8,15 @@ from typing import Type, Optional
 import pytest
 from requests.sessions import Session
 from requests.models import Response
+
+
+class BaseClient:
+	def __init__(self, *args, **kwargs) -> None:
+		pass
+
+
+class Client(SyncAPIMixin, BaseClient):
+	pass
 
 
 class TestSyncAPIMixin:
@@ -26,7 +36,9 @@ class TestSyncAPIMixin:
 		expected_error_type: Optional[Type[Exception]],
 		expected_error_text: Optional[str],
 	):
-		api = SyncAPIMixin(Session())
+		session = Session()
+		config = SyncConfig(session, None, "")
+		api = Client(config)
 		response = Response()
 		response.status_code = status
 

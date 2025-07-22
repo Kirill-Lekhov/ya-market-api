@@ -1,5 +1,6 @@
 from ya_market_api.guide.region.sync_api import SyncGuideRegionAPI
 from ya_market_api.guide.region.dataclass import RegionSearchRequest, RegionInfoRequest, RegionChildrenRequest
+from ya_market_api.base.sync_config import SyncConfig
 
 from unittest.mock import patch, Mock
 
@@ -10,7 +11,8 @@ class TestSyncGuideRegionAPI:
 		session.post = Mock()
 		session.post.return_value = Mock()
 		session.post.return_value.text = "RAW DATA"
-		api = SyncGuideRegionAPI(session)
+		config = SyncConfig(session, 1, "")
+		api = SyncGuideRegionAPI(config)
 
 		with patch("ya_market_api.guide.region.sync_api.RegionCountriesResponse") as RegionCountriesResponseMock:
 			RegionCountriesResponseMock.model_validate_json = Mock()
@@ -27,7 +29,8 @@ class TestSyncGuideRegionAPI:
 		session.get = Mock()
 		session.get.return_value = Mock()
 		session.get.return_value.text = "RAW DATA"
-		api = SyncGuideRegionAPI(session)
+		config = SyncConfig(session, 1, "")
+		api = SyncGuideRegionAPI(config)
 		request = RegionSearchRequest(name="REGION_NAME", limit=100, page_token="PAGE_TOKEN")
 
 		with patch("ya_market_api.guide.region.sync_api.RegionSearchResponse") as RegionSearchResponseMock:
@@ -48,7 +51,8 @@ class TestSyncGuideRegionAPI:
 		session.get = Mock()
 		session.get.return_value = Mock()
 		session.get.return_value.text = "RAW DATA"
-		api = SyncGuideRegionAPI(session)
+		config = SyncConfig(session, 1, "")
+		api = SyncGuideRegionAPI(config)
 		request = RegionInfoRequest(region_id=512)
 
 		with patch("ya_market_api.guide.region.sync_api.RegionInfoResponse") as RegionInfoResponseMock:
@@ -66,7 +70,8 @@ class TestSyncGuideRegionAPI:
 		session.get = Mock()
 		session.get.return_value = Mock()
 		session.get.return_value.text = "RAW DATA"
-		api = SyncGuideRegionAPI(session)
+		config = SyncConfig(session, 1, "")
+		api = SyncGuideRegionAPI(config)
 		request = RegionChildrenRequest(region_id=512, page=1, page_size=100)
 
 		with patch("ya_market_api.guide.region.sync_api.RegionChildrenResponse") as RegionChildrenResponseMock:

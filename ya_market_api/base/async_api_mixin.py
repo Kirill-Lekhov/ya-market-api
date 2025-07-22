@@ -1,4 +1,5 @@
 from ya_market_api.exception import InvalidResponseError, AuthorizationError, NotFoundError
+from ya_market_api.base.async_config import AsyncConfig
 
 from http import HTTPStatus
 
@@ -6,12 +7,14 @@ from aiohttp.client import ClientSession, ClientResponse
 
 
 class AsyncAPIMixin:
-	session: ClientSession
+	config: AsyncConfig
 
-	def __init__(self, session: ClientSession, *args, **kwargs) -> None:
-		super().__init__(*args, **kwargs)
+	def __init__(self, config: AsyncConfig) -> None:
+		super().__init__(config)
 
-		self.session = session
+	@property
+	def session(self) -> ClientSession:
+		return self.config.session
 
 	def validate_response(self, response: ClientResponse) -> None:
 		if not response.ok:

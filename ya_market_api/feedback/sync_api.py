@@ -9,13 +9,8 @@ from ya_market_api.feedback.dataclass import (
 
 from typing import Optional
 
-from requests import Session
-
 
 class SyncFeedbackAPI(SyncAPIMixin, BaseFeedbackAPI):
-	def __init__(self, session: Session, business_id: Optional[int] = None) -> None:
-		super().__init__(session, business_id=business_id)
-
 	def get_feedback_list(self, request: Optional[FeedbackListRequest] = None) -> FeedbackListResponse:
 		request = request or FeedbackListRequest()
 		url = self.router.feedback_list(self.business_id)

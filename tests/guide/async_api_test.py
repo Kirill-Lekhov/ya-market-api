@@ -1,6 +1,7 @@
 from tests.fake_async_session import FakeAsyncSession
 from ya_market_api.guide.async_api import AsyncGuideAPI
 from ya_market_api.guide.region.async_api import AsyncGuideRegionAPI
+from ya_market_api.base.async_config import AsyncConfig
 
 from unittest.mock import patch, Mock
 
@@ -12,14 +13,16 @@ class TestAsyncGuideAPI:
 	@pytest.mark.asyncio()
 	async def test___init__(self):
 		session = ClientSession()
-		api = AsyncGuideAPI(session)
+		config = AsyncConfig(session, 1, "")
+		api = AsyncGuideAPI(config)
 		assert isinstance(api.region, AsyncGuideRegionAPI)
 		assert api.region.session is session
 
 	@pytest.mark.asyncio()
 	async def test_get_token_info(self):
 		session = FakeAsyncSession("RAW DATA")
-		api = AsyncGuideAPI(session)		# type: ignore - for testing purposes
+		config = AsyncConfig(session, 1, "")				# type: ignore - for testing purposes
+		api = AsyncGuideAPI(config)
 
 		with patch("ya_market_api.guide.async_api.TokenInfoResponse") as TokenInfoResponseMock:
 			TokenInfoResponseMock.model_validate_json = Mock()
@@ -36,7 +39,8 @@ class TestAsyncGuideAPI:
 	@pytest.mark.asyncio()
 	async def test_get_delivery_services(self):
 		session = FakeAsyncSession("RAW DATA")
-		api = AsyncGuideAPI(session)		# type: ignore - for testing purposes
+		config = AsyncConfig(session, 1, "")		# type: ignore - for testing purposes
+		api = AsyncGuideAPI(config)
 
 		with patch("ya_market_api.guide.async_api.DeliveryServicesResponse") as DeliveryServicesResponseMock:
 			DeliveryServicesResponseMock.model_validate_json = Mock()

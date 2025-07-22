@@ -1,15 +1,14 @@
 from ya_market_api.base.sync_api_mixin import SyncAPIMixin
+from ya_market_api.base.sync_config import SyncConfig
 from ya_market_api.guide.base_api import BaseGuideAPI
 from ya_market_api.guide.dataclass import TokenInfoResponse, DeliveryServicesResponse
 from ya_market_api.guide.region.sync_api import SyncGuideRegionAPI
 
-from requests import Session
-
 
 class SyncGuideAPI(SyncAPIMixin, BaseGuideAPI):
-	def __init__(self, session: Session, *args, **kwargs) -> None:
-		super().__init__(session, *args, **kwargs)
-		self.region = SyncGuideRegionAPI(session, *args, **kwargs)
+	def __init__(self, config: SyncConfig) -> None:
+		super().__init__(config)
+		self.region = SyncGuideRegionAPI(config)
 
 	def get_token_info(self) -> TokenInfoResponse:
 		url = self.router.token_info()
