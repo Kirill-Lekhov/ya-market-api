@@ -53,7 +53,7 @@ class Request(BaseModel):
 		datetime_to: Optional[Arrow] = None,
 		paid: Optional[bool] = None,
 		rating_values: Optional[Collection[int]] = None,
-		reaction_status: Optional[Collection[int]] = None,
+		reaction_status: Optional[ReactionStatus] = None,
 	) -> None: ...
 	def __init__(
 		self,
@@ -65,7 +65,7 @@ class Request(BaseModel):
 		datetime_to: Optional[Arrow] = None,
 		paid: Optional[bool] = None,
 		rating_values: Optional[Collection[int]] = None,
-		reaction_status: Optional[Collection[int]] = None,
+		reaction_status: Optional[ReactionStatus] = None,
 	) -> None:
 		super().__init__(
 			limit=limit,
