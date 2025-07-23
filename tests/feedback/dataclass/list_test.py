@@ -1,4 +1,5 @@
 from ya_market_api.feedback.dataclass.list import Request, Feedback
+from ya_market_api.feedback.const import ReactionStatus
 
 import pytest
 from arrow import get
@@ -41,6 +42,12 @@ class TestRequest:
 
 		assert request.serialize_optional_arrow(None) is None
 		assert request.serialize_optional_arrow(get(2025, 1, 1, 12, 30, 30)) == "2025-01-01T12:30:30+00:00"
+
+	def test_serialize_reaction_status(self):
+		request = Request(feedback_ids=[1])
+
+		assert request.serialize_reaction_status(None) is None
+		assert request.serialize_reaction_status(ReactionStatus.ALL) == ReactionStatus.ALL.value
 
 	def test_model_dump_request_params(self):
 		request = Request(feedback_ids=[1, 2, 3], limit=50, page_token="page-token")

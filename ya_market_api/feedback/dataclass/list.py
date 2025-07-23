@@ -108,6 +108,13 @@ class Request(BaseModel):
 
 		return value.isoformat()
 
+	@field_serializer("reaction_status", mode="plain")
+	def serialize_reaction_status(self, value: Optional[ReactionStatus]) -> Optional[str]:
+		if value is None:
+			return None
+
+		return value.value
+
 	def model_dump_request_params(self) -> Dict[str, Any]:
 		return self.model_dump(include=self.QUERY_PARAMS, by_alias=True, exclude_none=True)
 
