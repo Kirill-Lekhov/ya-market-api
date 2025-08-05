@@ -228,6 +228,6 @@ from ya_market_api.offer.dataclass import OfferListByBusinessRequest
 api = SyncAPI.build(...)
 response = api.offer.get_offer_list_by_business()
 # or
-request = OfferListByBusinessRequest(category_id=[1, 2, 3], limit=10)
+request = OfferListByBusinessRequest(category_ids=[1, 2, 3], limit=10)
 response = api.offer.get_offer_list_by_business(request)
 ```
