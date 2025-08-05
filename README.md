@@ -216,3 +216,18 @@ response = api.feedback.skip_feedback_reaction(request)
 ```
 
 Docs: https://yandex.ru/dev/market/partner-api/doc/ru/reference/goods-feedback/skipGoodsFeedbacksReaction
+
+## Offer API
+### Get offer list by business id
+```python
+# Sync mode
+from ya_market_api.sync_api import SyncAPI
+from ya_market_api.offer.dataclass import OfferListByBusinessRequest
+
+
+api = SyncAPI.build(...)
+response = api.offer.get_offer_list_by_business()
+# or
+request = OfferListByBusinessRequest(category_id=[1, 2, 3], limit=10)
+response = api.offer.get_offer_list_by_business(request)
+```
