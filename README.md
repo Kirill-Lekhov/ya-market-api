@@ -231,3 +231,20 @@ response = api.offer.get_offer_list_by_business()
 request = OfferListByBusinessRequest(category_ids=[1, 2, 3], limit=10)
 response = api.offer.get_offer_list_by_business(request)
 ```
+
+## Campaign API
+### Get campaign list
+```python
+# Sync mode
+from ya_market_api.sync_api import SyncAPI
+from ya_market_api.campaign.dataclass import CampaignListRequest
+
+
+api = SyncAPI.build(...)
+response = api.campaign.get_campaign_list()
+# or
+request = CampaignListRequest(page=1)
+response = api.campaign.get_campaign_list(request)
+```
+
+Docs: https://yandex.ru/dev/market/partner-api/doc/ru/reference/campaigns/getCampaigns

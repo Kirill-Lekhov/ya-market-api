@@ -3,6 +3,7 @@ from ya_market_api.generic.requests.auth import APIKeyAuth
 from ya_market_api.guide.sync_api import SyncGuideAPI
 from ya_market_api.feedback.sync_api import SyncFeedbackAPI
 from ya_market_api.offer.sync_api import SyncOfferAPI
+from ya_market_api.campaign.sync_api import SyncCampaignAPI
 from ya_market_api.base.sync_config import SyncConfig
 
 from typing import Optional
@@ -14,6 +15,7 @@ class SyncAPI:
 	guide: SyncGuideAPI
 	feedback: SyncFeedbackAPI
 	offer: SyncOfferAPI
+	campaign: SyncCampaignAPI
 	config: SyncConfig
 
 	def __init__(self, config: SyncConfig) -> None:
@@ -21,6 +23,7 @@ class SyncAPI:
 		self.guide = SyncGuideAPI(config)
 		self.feedback = SyncFeedbackAPI(config)
 		self.offer = SyncOfferAPI(config)
+		self.campaign = SyncCampaignAPI(config)
 
 	@classmethod
 	def build(cls, api_key: str, *, business_id: Optional[int] = None, base_url: str = BASE_URL) -> "SyncAPI":

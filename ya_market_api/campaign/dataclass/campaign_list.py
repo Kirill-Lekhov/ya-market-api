@@ -1,7 +1,7 @@
 from ya_market_api.base.dataclass import FlippingPager
-from ya_market_api.guide.region.dataclass.region import Region
+from ya_market_api.campaign.const import APIAvailabilityStatus, PlacementType
 
-from typing import Optional
+from typing import Optional, List
 
 from pydantic.main import BaseModel
 from pydantic.fields import Field
@@ -9,7 +9,6 @@ from pydantic.functional_validators import field_validator
 
 
 class Request(BaseModel):
-	region_id: int
 	page: Optional[int] = None
 	page_size: Optional[int] = Field(default=None, serialization_alias="pageSize")
 
@@ -24,18 +23,21 @@ class Request(BaseModel):
 
 		return value
 
-	@field_validator("page_size", mode="after")
-	@classmethod
-	def page_size_is_valid(cls, value: Optional[int]) -> Optional[int]:
-		if value is None:
-			return None
 
-		if value < 1:
-			raise ValueError("The page_size cannot be less than 1")
+class Business(BaseModel):
+	id: Optional[int] = None
+	name: Optional[str] = None
 
-		return value
+
+class Campaign(BaseModel):
+	api_availability: Optional[APIAvailabilityStatus] = Field(default=None, validation_alias="apiAvailability")
+	business: Optional[Business] = None
+	client_id: Optional[int] = Field(default=None, deprecated=True, validation_alias="clientId")
+	domain: Optional[str] = None
+	id: Optional[int] = None
+	placement_type: Optional[PlacementType] = Field(default=None, validation_alias="placementType")
 
 
 class Response(BaseModel):
+	campaigns: List[Campaign]
 	pager: Optional[FlippingPager] = None
-	region: Optional[Region] = Field(default=None, validation_alias="regions")

@@ -2,6 +2,7 @@ from ya_market_api.const import Header, BASE_URL
 from ya_market_api.guide.async_api import AsyncGuideAPI
 from ya_market_api.feedback.async_api import AsyncFeedbackAPI
 from ya_market_api.offer.async_api import AsyncOfferAPI
+from ya_market_api.campaign.async_api import AsyncCampaignAPI
 from ya_market_api.base.async_config import AsyncConfig
 
 from typing import Optional
@@ -13,6 +14,7 @@ class AsyncAPI:
 	guide: AsyncGuideAPI
 	feedback: AsyncFeedbackAPI
 	offer: AsyncOfferAPI
+	campaign: AsyncCampaignAPI
 	config: AsyncConfig
 
 	def __init__(self, config: AsyncConfig) -> None:
@@ -20,6 +22,7 @@ class AsyncAPI:
 		self.guide = AsyncGuideAPI(config)
 		self.feedback = AsyncFeedbackAPI(config)
 		self.offer = AsyncOfferAPI(config)
+		self.campaign = AsyncCampaignAPI(config)
 
 	async def close(self) -> None:
 		await self.config.session.close()
