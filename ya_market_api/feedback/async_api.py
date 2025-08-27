@@ -11,7 +11,6 @@ from typing import Optional
 
 
 class AsyncFeedbackAPI(AsyncAPIMixin, BaseFeedbackAPI):
-
 	async def get_feedback_list(self, request: Optional[FeedbackListRequest] = None) -> FeedbackListResponse:
 		request = request or FeedbackListRequest()
 		url = self.router.feedback_list(self.business_id)
