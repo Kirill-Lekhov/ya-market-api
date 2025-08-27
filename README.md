@@ -232,6 +232,8 @@ request = OfferListByBusinessRequest(category_ids=[1, 2, 3], limit=10)
 response = api.offer.get_offer_list_by_business(request)
 ```
 
+Docs: https://yandex.ru/dev/market/partner-api/doc/ru/reference/business-assortment/getOfferMappings
+
 ## Campaign API
 ### Get campaign list
 ```python
