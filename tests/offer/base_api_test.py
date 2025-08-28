@@ -10,7 +10,7 @@ class TestBaseOfferAPI:
 		config = Config(None, "")
 		api = BaseOfferAPI(config)
 
-		with pytest.raises(BusinessIdError, match=""):
+		with pytest.raises(BusinessIdError, match="The business_id was not specified"):
 			api.business_id
 
 		config.business_id = 512
