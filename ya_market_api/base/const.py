@@ -3,11 +3,13 @@ from ya_market_api.base.enum_toolkit import allow_unknown
 from enum import Enum
 
 
+@allow_unknown
 class Status(Enum):
 	OK = "OK"
 	ERROR = "ERROR"
 
 
+@allow_unknown
 class AuthScope(Enum):
 	ALL_METHODS = "ALL_METHODS"		# полное управление кабинетом
 	ALL_METHODS_READ_ONLY = "ALL_METHODS_READ_ONLY"		# просмотр всей информации в кабинете

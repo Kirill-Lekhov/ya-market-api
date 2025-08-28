@@ -1,11 +1,15 @@
+from ya_market_api.base.enum_toolkit import allow_unknown
+
 from enum import Enum
 
 
+@allow_unknown
 class CatalogLanguageType(Enum):
 	RU = "RU"		# русский
 	UZ = "UZ"		# узбекский
 
 
+@allow_unknown
 class OfferCardStatusType(Enum):
 	HAS_CARD_CAN_NOT_UPDATE = "HAS_CARD_CAN_NOT_UPDATE"		# Карточка Маркета.
 	HAS_CARD_CAN_UPDATE = "HAS_CARD_CAN_UPDATE"		# Можно дополнить.
@@ -18,11 +22,13 @@ class OfferCardStatusType(Enum):
 	NO_CARD_ADD_TO_CAMPAIGN = "NO_CARD_ADD_TO_CAMPAIGN"		# Разместите товар в магазине.
 
 
+@allow_unknown
 class AgeUnit(Enum):
 	YEAR = "YEAR"
 	MONTH = "MONTH"
 
 
+@allow_unknown
 class CampaignStatusType(Enum):
 	PUBLISHED = "PUBLISHED"		# Готов к продаже
 	CHECKING = "CHECKING"		# На проверке
@@ -35,11 +41,13 @@ class CampaignStatusType(Enum):
 	ARCHIVED = "ARCHIVED"		# В архиве
 
 
+@allow_unknown
 class CommodityCodeType(Enum):
 	CUSTOMS_COMMODITY_CODE = "CUSTOMS_COMMODITY_CODE"
 	IKPU_CODE = "IKPU_CODE"
 
 
+@allow_unknown
 class OfferConditionQualityType(Enum):
 	PERFECT = "PERFECT"		# идеальный
 	EXCELLENT = "EXCELLENT"		# отличный
@@ -47,6 +55,7 @@ class OfferConditionQualityType(Enum):
 	NOT_SPECIFIED = "NOT_SPECIFIED"		# не выбран
 
 
+@allow_unknown
 class OfferConditionType(Enum):
 	PREOWNED = "PREOWNED"		# бывший в употреблении товар, раньше принадлежал другому человеку
 	SHOWCASESAMPLE = "SHOWCASESAMPLE"		# витринный образец
@@ -56,6 +65,7 @@ class OfferConditionType(Enum):
 	NOT_SPECIFIED = "NOT_SPECIFIED"		# не выбран
 
 
+@allow_unknown
 class TimeUnit(Enum):
 	HOUR = "HOUR"		# час
 	DAY = "DAY"		# сутки
@@ -64,12 +74,14 @@ class TimeUnit(Enum):
 	YEAR = "YEAR"		# год
 
 
+@allow_unknown
 class MediaFileUploadState(Enum):
 	UPLOADING = "UPLOADING"		# загружается
 	UPLOADED = "UPLOADED"		# успешно загружен
 	FAILED = "FAILED"		# при загрузке произошла ошибка. Повторите попытку позже
 
 
+@allow_unknown
 class SellingProgramType(Enum):
 	FBY = "FBY"		# FBY
 	FBS = "FBS"		# FBS
@@ -77,11 +89,13 @@ class SellingProgramType(Enum):
 	EXPRESS = "EXPRESS"		# Экспресс
 
 
+@allow_unknown
 class SellingProgramStatusType(Enum):
 	FINE = "FINE"		# доступно
 	REJECT = "REJECT"		# недоступно
 
 
+@allow_unknown
 class OfferType(Enum):
 	DEFAULT = "DEFAULT"		# товары, для которых вы передавали особый тип ранее и хотите убрать его
 	MEDICINE = "MEDICINE"		# лекарства
@@ -92,6 +106,7 @@ class OfferType(Enum):
 	ALCOHOL = "ALCOHOL"		# алкоголь
 
 
+@allow_unknown
 class ShowcaseType(Enum):
 	B2B = "B2B"
 	B2C = "B2C"
