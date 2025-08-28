@@ -90,3 +90,8 @@ class OfferType(Enum):
 	ARTIST_TITLE = "ARTIST_TITLE"		# музыкальная и видеопродукция
 	ON_DEMAND = "ON_DEMAND"		# товары на заказ
 	ALCOHOL = "ALCOHOL"		# алкоголь
+
+
+class ShowcaseType(Enum):
+	B2B = "B2B"
+	B2C = "B2C"

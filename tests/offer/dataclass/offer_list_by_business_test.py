@@ -1,4 +1,4 @@
-from ya_market_api.offer.dataclass.offer_list_by_business import Request, Price, BasicPrice
+from ya_market_api.offer.dataclass.offer_list_by_business import Request, Price, PriceWithDiscount
 from ya_market_api.offer.const import OfferCardStatusType, CatalogLanguageType
 
 import pytest
@@ -106,4 +106,4 @@ class TestPrice:
 
 class TestBasicPrice:
 	def test_datetimes_must_be_arrow(self):
-		assert BasicPrice.datetimes_must_be_arrow("2025-01-01T00:00:00") == get_arrow(2025, 1, 1)
+		assert PriceWithDiscount.datetimes_must_be_arrow("2025-01-01T00:00:00") == get_arrow(2025, 1, 1)

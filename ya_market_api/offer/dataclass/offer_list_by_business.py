@@ -3,7 +3,7 @@ from ya_market_api.base.const import CurrencyType
 from ya_market_api.offer.const import (
 	CatalogLanguageType, OfferCardStatusType, AgeUnit, CampaignStatusType, CommodityCodeType,
 	OfferConditionQualityType, OfferConditionType, TimeUnit, MediaFileUploadState, SellingProgramType,
-	SellingProgramStatusType, OfferType,
+	SellingProgramStatusType, OfferType, ShowcaseType,
 )
 
 from typing import Final, Set, Optional, Collection, List, Dict, Any, overload
@@ -197,6 +197,8 @@ class Request(BaseModel):
 class Mapping(BaseModel):
 	market_category_id: Optional[int] = Field(default=None, validation_alias="marketCategoryId")
 	market_category_name: Optional[str] = Field(default=None, validation_alias="marketCategoryName")
+	market_model_id: Optional[int] = Field(default=None, deprecated=True, validation_alias="marketModelId")
+	market_model_name: Optional[str] = Field(default=None, deprecated=True, validation_alias="marketModelName")
 	market_sku: Optional[int] = Field(default=None, validation_alias="marketSku")
 	market_sku_name: Optional[str] = Field(default=None, validation_alias="marketSkuName")
 
@@ -219,7 +221,7 @@ class Age(BaseModel):
 	value: float
 
 
-class BasicPrice(BaseModel):
+class PriceWithDiscount(BaseModel):
 	model_config = ConfigDict(arbitrary_types_allowed=True)
 
 	updated_at: Arrow = Field(validation_alias="updatedAt")
@@ -262,7 +264,7 @@ class OfferManual(BaseModel):
 
 class OfferMediaFile(BaseModel):
 	title: Optional[str] = None
-	upload_state: Optional[MediaFileUploadState] = None
+	upload_state: Optional[MediaFileUploadState] = Field(default=None, validation_alias="uploadState")
 	url: Optional[str] = None
 
 
@@ -274,31 +276,40 @@ class OfferMediaFiles(BaseModel):
 
 
 class OfferSellingProgram(BaseModel):
-	selling_program: SellingProgramType = Field(validation_alias="sellingProgram")
+	type: SellingProgramType = Field(validation_alias="sellingProgram")
 	status: SellingProgramStatusType
 
 
-class WeightDimensions(BaseModel):
+class OfferWeightDimensions(BaseModel):
 	height: float
 	length: float
 	weight: float
 	width: float
 
 
+class OfferParam(BaseModel):
+	name: str
+	value: str
+
+
 class Offer(BaseModel):
 	id: str = Field(validation_alias="offerId")
-	additional_expenses: Optional[Price] = Field(default=None, validation_alias="additionalExpenses")		# TODO: Add type
+	additional_expenses: Optional[Price] = Field(default=None, validation_alias="additionalExpenses")
 	adult: Optional[bool] = None
 	age: Optional[Age] = None
 	archived: Optional[bool] = None
 	barcodes: List[str] = Field(default_factory=list)
-	basic_price: Optional[BasicPrice] = Field(default=None, validation_alias="basicPrice")
+	basic_price: Optional[PriceWithDiscount] = Field(default=None, validation_alias="basicPrice")
 	box_count: Optional[int] = Field(default=None, validation_alias="boxCount")
 	campaigns: List[CampaignStatus] = Field(default_factory=list)
 	card_status: Optional[OfferCardStatusType] = Field(default=None, validation_alias="cardStatus")
+	category: Optional[str] = Field(default=None, deprecated=True)
 	certificates: List[str] = Field(default_factory=list, validation_alias="certificates")
 	commodity_codes: List[CommodityCode] = Field(default_factory=list, validation_alias="commodityCodes")
 	condition: Optional[OfferCondition] = None
+	customs_commodity_code: Optional[str] = Field(
+		default=None, deprecated=True, validation_alias="customsCommodityCodes",
+	)
 	description: Optional[str] = None
 	downloadable: Optional[bool] = None
 	guarantee_period: Optional[TimePeriod] = Field(default=None, validation_alias="guaranteePeriod")
@@ -308,6 +319,7 @@ class Offer(BaseModel):
 	market_category_id: Optional[int] = Field(default=None, validation_alias="marketCategoryId")		# Seems to be abandoned
 	media_files: Optional[OfferMediaFiles] = Field(default=None, validation_alias="mediaFiles")
 	name: Optional[str] = None
+	params: List[OfferParam] = Field(default_factory=list, deprecated=True)
 	pictures: List[str] = Field(default_factory=list)
 	purchase_price: Optional[Price] = Field(default=None, validation_alias="purchasePrice")
 	selling_programs: List[OfferSellingProgram] = Field(default_factory=list, validation_alias="sellingParams")
@@ -317,12 +329,18 @@ class Offer(BaseModel):
 	vendor: Optional[str] = None
 	vendor_code: Optional[str] = Field(default=None, validation_alias="vendorCode")
 	videos: List[str] = Field(default_factory=list)
-	weight_dimensions: Optional[WeightDimensions] = Field(default=None, validation_alias="weightDimensions")
+	weight_dimensions: Optional[OfferWeightDimensions] = Field(default=None, validation_alias="weightDimensions")
 
 
-class OfferMappings(BaseModel):
+class ShowcaseURL(BaseModel):
+	type: ShowcaseType = Field(validation_alias="showcaseType")
+	url: str = Field(validation_alias="showcaseUrl")
+
+
+class OfferMapping(BaseModel):
 	mapping: Optional[Mapping] = None
 	offer: Optional[Offer] = None
+	showcase_urls: List[ShowcaseURL] = Field(default_factory=list, validation_alias="showcaseUrls")
 
 
 class Paging(BaseModel):
@@ -331,7 +349,7 @@ class Paging(BaseModel):
 
 
 class ResponseResult(BaseModel):
-	offer_mappings: List[OfferMappings] = Field(validation_alias="offerMappings")
+	offer_mappings: List[OfferMapping] = Field(validation_alias="offerMappings")
 	paging: Optional[Paging] = None
 
 
