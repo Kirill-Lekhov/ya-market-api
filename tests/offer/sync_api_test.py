@@ -11,7 +11,7 @@ class TestSyncOfferAPI:
 		session.post = Mock()
 		session.post.return_value = Mock()
 		session.post.return_value.text = "RAW DATA"
-		config = SyncConfig(session, 1, "")
+		config = SyncConfig(session, "", business_id=1)
 		api = SyncOfferAPI(config)
 		request = OfferListByBusinessRequest(limit=10, page_token="page-token", category_ids=(1, 2, 3))
 

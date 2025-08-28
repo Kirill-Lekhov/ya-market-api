@@ -12,7 +12,7 @@ class TestAsyncOfferAPI:
 	@pytest.mark.asyncio()
 	async def test_get_offer_list_by_business(self):
 		session = FakeAsyncSession("RAW DATA")
-		config = AsyncConfig(session, 1, "")		# type: ignore - for testing purposes
+		config = AsyncConfig(session, "", business_id=1)		# type: ignore - for testing purposes
 		api = AsyncOfferAPI(config)
 		request = OfferListByBusinessRequest(limit=10, page_token="page-token", category_ids=(1, 2, 3))
 

@@ -19,3 +19,7 @@ class NotFoundError(InvalidResponseError):
 
 class BusinessIdError(APIError):
 	pass
+
+
+class CampaignIdError(APIError):
+	pass

@@ -11,7 +11,7 @@ class TestSyncGuideRegionAPI:
 		session.post = Mock()
 		session.post.return_value = Mock()
 		session.post.return_value.text = "RAW DATA"
-		config = SyncConfig(session, 1, "")
+		config = SyncConfig(session, "", business_id=1)
 		api = SyncGuideRegionAPI(config)
 
 		with patch("ya_market_api.guide.region.sync_api.RegionCountriesResponse") as RegionCountriesResponseMock:
@@ -29,7 +29,7 @@ class TestSyncGuideRegionAPI:
 		session.get = Mock()
 		session.get.return_value = Mock()
 		session.get.return_value.text = "RAW DATA"
-		config = SyncConfig(session, 1, "")
+		config = SyncConfig(session, "", business_id=1)
 		api = SyncGuideRegionAPI(config)
 		request = RegionSearchRequest(name="REGION_NAME", limit=100, page_token="PAGE_TOKEN")
 
@@ -51,7 +51,7 @@ class TestSyncGuideRegionAPI:
 		session.get = Mock()
 		session.get.return_value = Mock()
 		session.get.return_value.text = "RAW DATA"
-		config = SyncConfig(session, 1, "")
+		config = SyncConfig(session, "", business_id=1)
 		api = SyncGuideRegionAPI(config)
 		request = RegionInfoRequest(region_id=512)
 
@@ -70,7 +70,7 @@ class TestSyncGuideRegionAPI:
 		session.get = Mock()
 		session.get.return_value = Mock()
 		session.get.return_value.text = "RAW DATA"
-		config = SyncConfig(session, 1, "")
+		config = SyncConfig(session, "", business_id=1)
 		api = SyncGuideRegionAPI(config)
 		request = RegionChildrenRequest(region_id=512, page=1, page_size=100)
 

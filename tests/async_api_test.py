@@ -14,7 +14,7 @@ class TestAsyncAPI:
 	@pytest.mark.asyncio()
 	async def test___init__(self):
 		session = ClientSession()
-		config = AsyncConfig(session, None, "")
+		config = AsyncConfig(session, "", business_id=1)
 		api = AsyncAPI(config)
 		assert api.config is config
 		assert isinstance(api.guide, AsyncGuideAPI)

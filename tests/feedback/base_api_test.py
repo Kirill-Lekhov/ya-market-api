@@ -7,7 +7,7 @@ import pytest
 
 class TestBaseFeedbackAPI:
 	def test_business_id(self):
-		config = Config(None, None, "")
+		config = Config(None, "")
 		api = BaseFeedbackAPI(config)
 
 		with pytest.raises(BusinessIdError, match="The business_id was not specified"):

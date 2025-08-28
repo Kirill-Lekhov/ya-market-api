@@ -12,7 +12,7 @@ class TestAsyncGuideRegionAPI:
 	@pytest.mark.asyncio()
 	async def test_get_region_countries(self):
 		session = FakeAsyncSession("RAW DATA")
-		config = AsyncConfig(session, 1, "")		# type: ignore - for testing purposes
+		config = AsyncConfig(session, "", business_id=1)		# type: ignore - for testing purposes
 		api = AsyncGuideRegionAPI(config)
 
 		with patch("ya_market_api.guide.region.async_api.RegionCountriesResponse") as RegionCountriesResponseMock:
@@ -30,7 +30,7 @@ class TestAsyncGuideRegionAPI:
 	@pytest.mark.asyncio()
 	async def test_get_search_region(self):
 		session = FakeAsyncSession("RAW DATA")
-		config = AsyncConfig(session, 1, "")		# type: ignore - for testing purposes
+		config = AsyncConfig(session, "", business_id=1)		# type: ignore - for testing purposes
 		api = AsyncGuideRegionAPI(config)
 		request = RegionSearchRequest(name="REGION_NAME", limit=100, page_token="PAGE_TOKEN")
 
@@ -49,7 +49,7 @@ class TestAsyncGuideRegionAPI:
 	@pytest.mark.asyncio()
 	async def test_get_region_info(self):
 		session = FakeAsyncSession("RAW DATA")
-		config = AsyncConfig(session, 1, "")		# type: ignore - for testing purposes
+		config = AsyncConfig(session, "", business_id=1)		# type: ignore - for testing purposes
 		api = AsyncGuideRegionAPI(config)
 		request = RegionInfoRequest(region_id=512)
 
@@ -67,7 +67,7 @@ class TestAsyncGuideRegionAPI:
 	@pytest.mark.asyncio()
 	async def test_get_region_children(self):
 		session = FakeAsyncSession("RAW DATA")
-		config = AsyncConfig(session, 1, "")		# type: ignore - for testing purposes
+		config = AsyncConfig(session, "", business_id=1)		# type: ignore - for testing purposes
 		api = AsyncGuideRegionAPI(config)
 		request = RegionChildrenRequest(region_id=512, page=1, page_size=100)
 

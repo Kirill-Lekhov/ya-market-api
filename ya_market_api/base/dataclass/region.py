@@ -1,4 +1,4 @@
-from ya_market_api.guide.region.const import RegionType
+from ya_market_api.base.const import RegionType
 
 from typing import List, Optional
 

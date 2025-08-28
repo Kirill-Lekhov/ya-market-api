@@ -5,13 +5,22 @@ T = TypeVar("T")
 
 
 class Config(Generic[T]):
-	__slots__ = "session", "business_id", "base_url"
+	__slots__ = "session", "base_url", "business_id", "campaign_id"
 
 	session: T
-	business_id: Optional[int]
 	base_url: str
+	business_id: Optional[int]
+	campaign_id: Optional[int]
 
-	def __init__(self, session: T, business_id: Optional[int], base_url: str) -> None:
+	def __init__(
+		self,
+		session: T,
+		base_url: str,
+		*,
+		business_id: Optional[int] = None,
+		campaign_id: Optional[int] = None,
+	) -> None:
 		self.session = session
-		self.business_id = business_id
 		self.base_url = base_url
+		self.business_id = business_id
+		self.campaign_id = campaign_id

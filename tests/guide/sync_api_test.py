@@ -10,7 +10,7 @@ from requests.sessions import Session
 class TestSyncGuideAPI:
 	def test___init__(self):
 		session = Session()
-		config = SyncConfig(session, 1, "")
+		config = SyncConfig(session, "", business_id=1)
 		api = SyncGuideAPI(config)
 		assert isinstance(api.region, SyncGuideRegionAPI)
 		assert api.region.session is session
@@ -20,7 +20,7 @@ class TestSyncGuideAPI:
 		session.post = Mock()
 		session.post.return_value = Mock()
 		session.post.return_value.text = "TEXT"
-		config = SyncConfig(session, 1, "")
+		config = SyncConfig(session, "", business_id=1)
 		api = SyncGuideAPI(config)
 
 		with patch("ya_market_api.guide.sync_api.TokenInfoResponse") as TokenInfoResponseMock:
@@ -38,7 +38,7 @@ class TestSyncGuideAPI:
 		session.get = Mock()
 		session.get.return_value = Mock()
 		session.get.return_value.text = "TEXT"
-		config = SyncConfig(session, 1, "")
+		config = SyncConfig(session, "", business_id=1)
 		api = SyncGuideAPI(config)
 
 		with patch("ya_market_api.guide.sync_api.DeliveryServicesResponse") as DeliveryServicesResponseMock:

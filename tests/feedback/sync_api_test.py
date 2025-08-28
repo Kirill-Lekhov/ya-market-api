@@ -14,7 +14,7 @@ class TestSyncFeedbackAPI:
 		session.post = Mock()
 		session.post.return_value = Mock()
 		session.post.return_value.text = "RAW DATA"
-		config = SyncConfig(session, 1, "")
+		config = SyncConfig(session, "", business_id=1)
 		api = SyncFeedbackAPI(config)
 		request = FeedbackListRequest(limit=50, page_token="page-token", feedback_ids=(1, 2, 3))
 
@@ -41,7 +41,7 @@ class TestSyncFeedbackAPI:
 		session.post = Mock()
 		session.post.return_value = Mock()
 		session.post.return_value.text = "RAW DATA"
-		config = SyncConfig(session, 1, "")
+		config = SyncConfig(session, "", business_id=1)
 		api = SyncFeedbackAPI(config)
 		request = FeedbackCommentListRequest(comment_ids=(1, 2, 3), limit=50, page_token="page-token")
 
@@ -64,7 +64,7 @@ class TestSyncFeedbackAPI:
 		session.post = Mock()
 		session.post.return_value = Mock()
 		session.post.return_value.text = "RAW DATA"
-		config = SyncConfig(session, 1, "")
+		config = SyncConfig(session, "", business_id=1)
 		api = SyncFeedbackAPI(config)
 		request = FeedbackCommentAddRequest.create(512, "COMMENT", 1024)
 
@@ -86,7 +86,7 @@ class TestSyncFeedbackAPI:
 		session.post = Mock()
 		session.post.return_value = Mock()
 		session.post.return_value.text = "RAW DATA"
-		config = SyncConfig(session, 1, "")
+		config = SyncConfig(session, "", business_id=1)
 		api = SyncFeedbackAPI(config)
 		request = FeedbackCommentUpdateRequest.create(512, 1024, "COMMENT")
 
@@ -108,7 +108,7 @@ class TestSyncFeedbackAPI:
 		session.post = Mock()
 		session.post.return_value = Mock()
 		session.post.return_value.text = "RAW DATA"
-		config = SyncConfig(session, 1, "")
+		config = SyncConfig(session, "", business_id=1)
 		api = SyncFeedbackAPI(config)
 		request = FeedbackCommentDeleteRequest(id=512)
 
@@ -130,7 +130,7 @@ class TestSyncFeedbackAPI:
 		session.post = Mock()
 		session.post.return_value = Mock()
 		session.post.return_value.text = "RAW DATA"
-		config = SyncConfig(session, 1, "")
+		config = SyncConfig(session, "", business_id=1)
 		api = SyncFeedbackAPI(config)
 		request = FeedbackReactionSkipRequest(feedback_ids=(1, 2, 3))
 

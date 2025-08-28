@@ -1,6 +1,7 @@
 from ya_market_api.base.dataclass import BaseResponse
+from ya_market_api.base.const import CurrencyType
 from ya_market_api.offer.const import (
-	CatalogLanguageType, OfferCardStatusType, CurrencyType, AgeUnit, CampaignStatusType, CommodityCodeType,
+	CatalogLanguageType, OfferCardStatusType, AgeUnit, CampaignStatusType, CommodityCodeType,
 	OfferConditionQualityType, OfferConditionType, TimeUnit, MediaFileUploadState, SellingProgramType,
 	SellingProgramStatusType, OfferType,
 )

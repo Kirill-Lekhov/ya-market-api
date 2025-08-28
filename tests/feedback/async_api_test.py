@@ -15,7 +15,7 @@ class TestAsyncFeedbackAPI:
 	@pytest.mark.asyncio()
 	async def test_get_feedback_list(self):
 		session = FakeAsyncSession("RAW DATA")
-		config = AsyncConfig(session, 1, "")		# type: ignore - for testing purposes
+		config = AsyncConfig(session, "", business_id=1)		# type: ignore - for testing purposes
 		api = AsyncFeedbackAPI(config)
 		request = FeedbackListRequest(limit=50, page_token="page-token", feedback_ids=(1, 2, 3))
 
@@ -41,7 +41,7 @@ class TestAsyncFeedbackAPI:
 	@pytest.mark.asyncio()
 	async def test_get_feedback_comment_list(self):
 		session = FakeAsyncSession("RAW DATA")
-		config = AsyncConfig(session, 1, "")		# type: ignore - for testing purposes
+		config = AsyncConfig(session, "", business_id=1)		# type: ignore - for testing purposes
 		api = AsyncFeedbackAPI(config)
 		request = FeedbackCommentListRequest(limit=50, page_token="page-token", comment_ids=(1, 2, 3))
 
@@ -61,7 +61,7 @@ class TestAsyncFeedbackAPI:
 	@pytest.mark.asyncio()
 	async def test_add_feedback_comment(self):
 		session = FakeAsyncSession("RAW DATA")
-		config = AsyncConfig(session, 1, "")		# type: ignore - for testing purposes
+		config = AsyncConfig(session, "", business_id=1)		# type: ignore - for testing purposes
 		api = AsyncFeedbackAPI(config)
 		request = FeedbackCommentAddRequest.create(512, "COMMENT", 1024)
 
@@ -80,7 +80,7 @@ class TestAsyncFeedbackAPI:
 	@pytest.mark.asyncio()
 	async def test_update_feedback_comment(self):
 		session = FakeAsyncSession("RAW DATA")
-		config = AsyncConfig(session, 1, "")		# type: ignore - for testing purposes
+		config = AsyncConfig(session, "", business_id=1)		# type: ignore - for testing purposes
 		api = AsyncFeedbackAPI(config)
 		request = FeedbackCommentUpdateRequest.create(512, 1024, "COMMENT")
 
@@ -99,7 +99,7 @@ class TestAsyncFeedbackAPI:
 	@pytest.mark.asyncio()
 	async def test_delete_feedback_comment(self):
 		session = FakeAsyncSession("RAW DATA")
-		config = AsyncConfig(session, 1, "")		# type: ignore - for testing purposes
+		config = AsyncConfig(session, "", business_id=1)		# type: ignore - for testing purposes
 		api = AsyncFeedbackAPI(config)
 		request = FeedbackCommentDeleteRequest(id=512)
 
@@ -118,7 +118,7 @@ class TestAsyncFeedbackAPI:
 	@pytest.mark.asyncio()
 	async def test_skip_feedback_reaction(self):
 		session = FakeAsyncSession("RAW DATA")
-		config = AsyncConfig(session, 1, "")		# type: ignore - for testing purposes
+		config = AsyncConfig(session, "", business_id=1)		# type: ignore - for testing purposes
 		api = AsyncFeedbackAPI(config)
 		request = FeedbackReactionSkipRequest(feedback_ids=(1, 2, 3))
 

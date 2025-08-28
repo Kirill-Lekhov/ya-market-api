@@ -13,7 +13,7 @@ class TestAsyncGuideAPI:
 	@pytest.mark.asyncio()
 	async def test___init__(self):
 		session = ClientSession()
-		config = AsyncConfig(session, 1, "")
+		config = AsyncConfig(session, "", business_id=1)
 		api = AsyncGuideAPI(config)
 		assert isinstance(api.region, AsyncGuideRegionAPI)
 		assert api.region.session is session
@@ -21,7 +21,7 @@ class TestAsyncGuideAPI:
 	@pytest.mark.asyncio()
 	async def test_get_token_info(self):
 		session = FakeAsyncSession("RAW DATA")
-		config = AsyncConfig(session, 1, "")				# type: ignore - for testing purposes
+		config = AsyncConfig(session, "", business_id=1)				# type: ignore - for testing purposes
 		api = AsyncGuideAPI(config)
 
 		with patch("ya_market_api.guide.async_api.TokenInfoResponse") as TokenInfoResponseMock:
@@ -39,7 +39,7 @@ class TestAsyncGuideAPI:
 	@pytest.mark.asyncio()
 	async def test_get_delivery_services(self):
 		session = FakeAsyncSession("RAW DATA")
-		config = AsyncConfig(session, 1, "")		# type: ignore - for testing purposes
+		config = AsyncConfig(session, "", business_id=1)		# type: ignore - for testing purposes
 		api = AsyncGuideAPI(config)
 
 		with patch("ya_market_api.guide.async_api.DeliveryServicesResponse") as DeliveryServicesResponseMock:

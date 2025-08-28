@@ -22,8 +22,9 @@ from ya_market_api.async_api import AsyncAPI		# Async mode
 def main() -> None:
 	api = SyncAPI.build(
 		api_key="...",
-		business_id=...,		# (optional) required for the Feedback API
 		base_url=...,		# (optional) may be used for test circuits
+		business_id=...,		# (optional) required for the Feedback API
+		campaign_id=...,		# (optional) required for the Order API
 	)
 
 	# Do things here...
@@ -32,8 +33,9 @@ def main() -> None:
 async def main() -> None:
 	api = await AsyncAPI.build(
 		api_key="...",
-		business_id=...,		# (optional) required for the Feedback API
 		base_url=...,		# (optional) may be used for test circuits
+		business_id=...,		# (optional) required for the Feedback API
+		campaign_id=...,		# (optional) required for the Order API
 	)
 
 	# Do things here...
@@ -250,3 +252,18 @@ response = api.campaign.get_campaign_list(request)
 ```
 
 Docs: https://yandex.ru/dev/market/partner-api/doc/ru/reference/campaigns/getCampaigns
+
+## Order API
+### Get order
+```python
+# Sync mode
+from ya_market_api.sync_api import SyncAPI
+from ya_market_api.order.dataclass import OrderGetRequest
+
+
+api = SyncAPI.build(...)
+request = OrderGetRequest(order_id=...)
+response = api.order.get_order(request)
+```
+
+Docs: https://yandex.ru/dev/market/partner-api/doc/ru/reference/orders/getOrder

@@ -38,7 +38,7 @@ class TestAsyncAPIMixin:
 		expected_error_text: Optional[str],
 	):
 		session = ClientSession()
-		config = AsyncConfig(session, None, "")
+		config = AsyncConfig(session, "", business_id=1)
 		api = Client(config)
 		response = Mock()
 		response.status = status

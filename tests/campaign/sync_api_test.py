@@ -11,7 +11,7 @@ class TestSyncCampaignAPI:
 		session.get = Mock()
 		session.get.return_value = Mock()
 		session.get.return_value.text = "RAW DATA"
-		config = SyncConfig(session, None, "")
+		config = SyncConfig(session, "")
 		api = SyncCampaignAPI(config)
 		request = CampaignListRequest(page=10, page_size=100)
 

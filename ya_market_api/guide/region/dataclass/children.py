@@ -1,5 +1,4 @@
-from ya_market_api.base.dataclass import FlippingPager
-from ya_market_api.guide.region.dataclass.region import Region
+from ya_market_api.base.dataclass import FlippingPager, Region
 
 from typing import Optional
 

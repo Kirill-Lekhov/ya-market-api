@@ -37,7 +37,7 @@ class TestSyncAPIMixin:
 		expected_error_text: Optional[str],
 	):
 		session = Session()
-		config = SyncConfig(session, None, "")
+		config = SyncConfig(session, "")
 		api = Client(config)
 		response = Response()
 		response.status_code = status

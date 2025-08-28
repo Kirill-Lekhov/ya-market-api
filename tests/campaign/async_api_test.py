@@ -12,7 +12,7 @@ class TestAsyncCampaignAPI:
 	@pytest.mark.asyncio()
 	async def test_get_campaign_list(self):
 		session = FakeAsyncSession("RAW DATA")
-		config = AsyncConfig(session, None, "")		# type: ignore - for testing purposes
+		config = AsyncConfig(session, "", business_id=1)		# type: ignore - for testing purposes
 		api = AsyncCampaignAPI(config)
 		request = CampaignListRequest(page=10, page_size=100)
 

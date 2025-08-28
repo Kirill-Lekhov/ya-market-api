@@ -7,7 +7,7 @@ import pytest
 
 class TestBaseOfferAPI:
 	def test_business_id(self):
-		config = Config(None, None, "")
+		config = Config(None, "")
 		api = BaseOfferAPI(config)
 
 		with pytest.raises(BusinessIdError, match=""):

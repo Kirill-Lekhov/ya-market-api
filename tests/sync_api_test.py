@@ -13,7 +13,7 @@ from requests.sessions import Session
 class TestSyncAPI:
 	def test___init__(self):
 		session = Session()
-		config = SyncConfig(session, None, "")
+		config = SyncConfig(session, "")
 		api = SyncAPI(config)
 		assert api.config.session is session
 		assert isinstance(api.guide, SyncGuideAPI)

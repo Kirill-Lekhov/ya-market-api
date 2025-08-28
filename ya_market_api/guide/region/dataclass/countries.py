@@ -1,4 +1,4 @@
-from ya_market_api.guide.region.dataclass.region import Region
+from ya_market_api.base.dataclass.region import Region
 
 from typing import List
 
