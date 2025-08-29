@@ -2,7 +2,7 @@ from ya_market_api.base.dataclass import BaseResponse
 from ya_market_api.feedback.const import CommentStatus
 from ya_market_api.feedback.dataclass.generic import FeedbackCommentAuthor
 
-from typing import Optional, Collection, Final, Set, Dict, Any, List, overload
+from typing import Optional, Collection, FrozenSet, Dict, Any, List, ClassVar, overload
 from warnings import warn
 
 from pydantic.main import BaseModel
@@ -11,8 +11,8 @@ from pydantic.config import ConfigDict
 
 
 class Request(BaseModel):
-	QUERY_PARAMS: Final[Set[str]] = {"limit", "page_token"}
-	S11N_ALIAS_COMMENT_IDS: Final[str] = "commentIds"
+	QUERY_PARAMS: ClassVar[FrozenSet[str]] = frozenset({"limit", "page_token"})
+	S11N_ALIAS_COMMENT_IDS: ClassVar[str] = "commentIds"
 	model_config = ConfigDict(arbitrary_types_allowed=True)
 
 	# query params

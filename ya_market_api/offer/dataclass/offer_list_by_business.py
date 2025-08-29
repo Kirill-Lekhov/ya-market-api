@@ -6,7 +6,7 @@ from ya_market_api.offer.const import (
 	SellingProgramStatusType, OfferType, ShowcaseType,
 )
 
-from typing import Final, Set, Optional, Collection, List, Dict, Any, overload
+from typing import FrozenSet, Optional, Collection, List, Dict, Any, ClassVar, overload
 from warnings import warn
 
 from pydantic.main import BaseModel
@@ -25,8 +25,8 @@ VendorNamesParam = Optional[Collection[str]]
 
 
 class Request(BaseModel):
-	QUERY_PARAMS: Final[Set[str]] = {"language", "limit", "page_token"}
-	S11N_ALIAS_OFFER_IDS: Final[str] = "offerIds"
+	QUERY_PARAMS: ClassVar[FrozenSet[str]] = frozenset({"language", "limit", "page_token"})
+	S11N_ALIAS_OFFER_IDS: ClassVar[str] = "offerIds"
 	model_config = ConfigDict(arbitrary_types_allowed=True)
 
 	# query params

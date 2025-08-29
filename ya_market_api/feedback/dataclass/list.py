@@ -1,7 +1,7 @@
 from ya_market_api.feedback.const import ReactionStatus
 from ya_market_api.base.dataclass import BaseResponse
 
-from typing import Optional, Collection, Final, Set, Dict, Any, List, overload
+from typing import Optional, Collection, FrozenSet, Dict, Any, List, ClassVar, overload
 from warnings import warn
 
 from pydantic.main import BaseModel
@@ -13,8 +13,8 @@ from arrow import Arrow, get as get_arrow
 
 
 class Request(BaseModel):
-	QUERY_PARAMS: Final[Set[str]] = {"limit", "page_token"}		# pydantic model_dump requires set
-	S11N_ALIAS_FEEDBACK_IDS: Final[str] = "feedbackIds"
+	QUERY_PARAMS: ClassVar[FrozenSet[str]] = frozenset({"limit", "page_token"})		# pydantic model_dump requires set
+	S11N_ALIAS_FEEDBACK_IDS: ClassVar[str] = "feedbackIds"
 	model_config = ConfigDict(arbitrary_types_allowed=True)
 
 	# query params
