@@ -82,14 +82,6 @@ class MediaFileUploadState(Enum):
 
 
 @allow_unknown
-class SellingProgramType(Enum):
-	FBY = "FBY"		# FBY
-	FBS = "FBS"		# FBS
-	DBS = "DBS"		# DBS
-	EXPRESS = "EXPRESS"		# Экспресс
-
-
-@allow_unknown
 class SellingProgramStatusType(Enum):
 	FINE = "FINE"		# доступно
 	REJECT = "REJECT"		# недоступно

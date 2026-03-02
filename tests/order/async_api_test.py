@@ -1,6 +1,6 @@
 from tests.fake_async_session import FakeAsyncSession
 from ya_market_api.order.async_api import AsyncOrderAPI
-from ya_market_api.order.dataclass import OrderGetRequest
+from ya_market_api.order.dataclass import OrderGetRequest, OrderListRequest
 from ya_market_api.base.async_config import AsyncConfig
 
 from unittest.mock import patch, Mock
@@ -28,3 +28,23 @@ class TestAsyncOrderAPI:
 				assert session.last_call_url == api.router.order_get(1, 512)
 				assert session.last_call_json == None
 				assert session.last_call_params == None
+
+	@pytest.mark.asyncio()
+	async def test_get_order_list(self):
+		session = FakeAsyncSession("RAW DATA")
+		config = AsyncConfig(session, "", business_id=1)		# type: ignore - for testing purposes
+		api = AsyncOrderAPI(config)
+		request = OrderListRequest(limit=10, order_ids={1})
+
+		with patch("ya_market_api.order.async_api.OrderListResponse") as OrderListResponseMock:
+			OrderListResponseMock.model_validate_json = Mock()
+			OrderListResponseMock.model_validate_json.return_value = "DESERIALIZED DATA"
+
+			with patch.object(api, "validate_response") as validate_response_mock:
+				assert await api.get_order_list(request) == "DESERIALIZED DATA"
+				OrderListResponseMock.model_validate_json.assert_called_once_with("RAW DATA")
+				validate_response_mock.assert_called_once_with(session.response)
+				assert session.last_call_method == "POST"
+				assert session.last_call_url == api.router.order_list(1)
+				assert session.last_call_json == {"orderIds": [1]}
+				assert session.last_call_params == {"limit": 10}

@@ -1,5 +1,5 @@
 from ya_market_api.order.sync_api import SyncOrderAPI
-from ya_market_api.order.dataclass import OrderGetRequest
+from ya_market_api.order.dataclass import OrderGetRequest, OrderListRequest
 from ya_market_api.base.sync_config import SyncConfig
 
 from unittest.mock import patch, Mock
@@ -24,3 +24,26 @@ class TestSyncOrderAPI:
 				OrderGetResponseMock.model_validate_json.assert_called_once_with("RAW DATA")
 				validate_response_mock.assert_called_once_with(session.get.return_value)
 				session.get.assert_called_once_with(url=api.router.order_get(1, 512))
+
+	def test_get_order_list(self):
+		session = Mock()
+		session.post = Mock()
+		session.post.return_value = Mock()
+		session.post.return_value.text = "RAW DATA"
+		config = SyncConfig(session, "", business_id=1)
+		api = SyncOrderAPI(config)
+		request = OrderListRequest(limit=10, order_ids={1})
+
+		with patch("ya_market_api.order.sync_api.OrderListResponse") as OrderListResponseMock:
+			OrderListResponseMock.model_validate_json = Mock()
+			OrderListResponseMock.model_validate_json.return_value = "DESERIALIZED DATA"
+
+			with patch.object(api, "validate_response") as validate_response_mock:
+				assert api.get_order_list(request) == "DESERIALIZED DATA"
+				OrderListResponseMock.model_validate_json.assert_called_once_with("RAW DATA")
+				validate_response_mock.assert_called_once_with(session.post.return_value)
+				session.post.assert_called_once_with(
+					url=api.router.order_list(1),
+					params={"limit": 10},
+					json={"orderIds": [1]},
+				)

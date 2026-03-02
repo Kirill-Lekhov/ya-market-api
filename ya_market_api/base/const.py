@@ -167,3 +167,11 @@ class RegionType(Enum):
 	CITY_DISTRICT = "CITY_DISTRICT"		# район города
 	SUBWAY_STATION = "SUBWAY_STATION"		# станция метро
 	REPUBLIC_AREA = "REPUBLIC_AREA"		# район субъекта федерации
+
+
+@allow_unknown
+class SellingProgramType(Enum):
+	FBY = "FBY"		# FBY
+	FBS = "FBS"		# FBS
+	DBS = "DBS"		# DBS
+	EXPRESS = "EXPRESS"		# Экспресс

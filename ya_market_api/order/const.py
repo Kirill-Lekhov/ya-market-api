@@ -295,3 +295,11 @@ class OrderPromoType(Enum):
 class OrderItemSubsidyType(Enum):
 	YANDEX_CASHBACK = "YANDEX_CASHBACK"		# скидка по подписке Яндекс Плюс.
 	SUBSIDY = "SUBSIDY"		# скидка Маркета (по акциям, промокодам, купонам и т. д.).
+
+
+@allow_unknown
+class OrderSourcePlatformType(Enum):
+	MARKET = "MARKET"
+	OZON = "OZON"
+	WILDBERRIES = "WILDBERRIES"
+	OTHER = "OTHER"
