@@ -4,6 +4,7 @@ from ya_market_api.feedback.async_api import AsyncFeedbackAPI
 from ya_market_api.offer.async_api import AsyncOfferAPI
 from ya_market_api.campaign.async_api import AsyncCampaignAPI
 from ya_market_api.order.async_api import AsyncOrderAPI
+from ya_market_api.question.async_api import AsyncQuestionAPI
 from ya_market_api.base.async_config import AsyncConfig
 
 from typing import Optional
@@ -17,6 +18,7 @@ class AsyncAPI:
 	offer: AsyncOfferAPI
 	campaign: AsyncCampaignAPI
 	order: AsyncOrderAPI
+	question: AsyncQuestionAPI
 	config: AsyncConfig
 
 	def __init__(self, config: AsyncConfig) -> None:
@@ -26,6 +28,7 @@ class AsyncAPI:
 		self.offer = AsyncOfferAPI(config)
 		self.campaign = AsyncCampaignAPI(config)
 		self.order = AsyncOrderAPI(config)
+		self.question = AsyncQuestionAPI(config)
 
 	async def close(self) -> None:
 		await self.config.session.close()
