@@ -6,6 +6,7 @@ from ya_market_api.offer.sync_api import SyncOfferAPI
 from ya_market_api.campaign.sync_api import SyncCampaignAPI
 from ya_market_api.order.sync_api import SyncOrderAPI
 from ya_market_api.question.sync_api import SyncQuestionAPI
+from ya_market_api.chat.sync_api import SyncChatAPI
 from ya_market_api.base.sync_config import SyncConfig
 
 from typing import Optional
@@ -20,6 +21,7 @@ class SyncAPI:
 	campaign: SyncCampaignAPI
 	order: SyncOrderAPI
 	question: SyncQuestionAPI
+	chat: SyncChatAPI
 	config: SyncConfig
 
 	def __init__(self, config: SyncConfig) -> None:
@@ -30,6 +32,7 @@ class SyncAPI:
 		self.campaign = SyncCampaignAPI(config)
 		self.order = SyncOrderAPI(config)
 		self.question = SyncQuestionAPI(config)
+		self.chat = SyncChatAPI(config)
 
 	@classmethod
 	def build(
