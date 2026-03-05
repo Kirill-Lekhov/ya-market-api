@@ -43,7 +43,7 @@ class TestSyncGuideRegionAPI:
 				validate_response_mock.assert_called_once_with(session.get.return_value)
 				session.get.assert_called_once_with(
 					url=api.router.region_search(),
-					params={"name": "REGION_NAME", "limit": 100, "page_token": "PAGE_TOKEN"},
+					params={"name": "REGION_NAME", "limit": 100, "pageToken": "PAGE_TOKEN"},
 				)
 
 	def test_get_region_info(self):

@@ -1,4 +1,4 @@
-from ya_market_api.base.dataclass import BaseResponse
+from ya_market_api.base.dataclass import BaseRequest, BaseResponse
 from ya_market_api.feedback.const import CommentStatus
 from ya_market_api.feedback.dataclass.generic import FeedbackCommentAuthor
 
@@ -10,7 +10,7 @@ from pydantic.fields import Field
 from pydantic.config import ConfigDict
 
 
-class Request(BaseModel):
+class Request(BaseRequest):
 	QUERY_PARAMS: ClassVar[FrozenSet[str]] = frozenset({"limit", "page_token"})
 	S11N_ALIAS_COMMENT_IDS: ClassVar[str] = "commentIds"
 	model_config = ConfigDict(arbitrary_types_allowed=True)
@@ -36,6 +36,7 @@ class Request(BaseModel):
 		limit: Optional[int] = None,
 		page_token: Optional[str] = None,
 	) -> None: ...
+
 	@overload
 	def __init__(
 		self,
@@ -44,6 +45,7 @@ class Request(BaseModel):
 		limit: Optional[int] = None,
 		page_token: Optional[str] = None,
 	) -> None: ...
+
 	def __init__(
 		self,
 		*,
@@ -59,11 +61,8 @@ class Request(BaseModel):
 			feedback_id=feedback_id,
 		)
 
-	def model_dump_request_params(self) -> Dict[str, Any]:
-		return self.model_dump(include=self.QUERY_PARAMS, by_alias=True, exclude_none=True)
-
 	def model_dump_request_payload(self) -> Dict[str, Any]:
-		result = self.model_dump(exclude=self.QUERY_PARAMS, by_alias=True, exclude_none=True)
+		result = super().model_dump_request_payload()
 
 		if self.comment_ids is not None and len(result) != 1:
 			warn("When using comment_ids, the other parameters will be ignored")

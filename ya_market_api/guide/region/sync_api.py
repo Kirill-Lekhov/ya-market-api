@@ -8,28 +8,31 @@ from ya_market_api.guide.region.dataclass import (
 
 class SyncGuideRegionAPI(SyncAPIMixin, BaseGuideRegionAPI):
 	def get_region_countries(self) -> RegionCountriesResponse:
-		url = self.router.region_countries()
-		response = self.session.post(url=url, json="")
+		response = self.session.post(url=self.router.region_countries(), json="")
 		self.validate_response(response)
+
 		return RegionCountriesResponse.model_validate_json(response.text)
 
 	def search_region(self, request: RegionSearchRequest) -> RegionSearchResponse:
-		url = self.router.region_search()
-		response = self.session.get(url=url, params=request.model_dump(exclude_defaults=True, by_alias=True))
+		response = self.session.get(
+			url=self.router.region_search(),
+			params=request.model_dump_request_params(),
+		)
 		self.validate_response(response)
+
 		return RegionSearchResponse.model_validate_json(response.text)
 
 	def get_region_info(self, request: RegionInfoRequest) -> RegionInfoResponse:
-		url = self.router.region_info(request.region_id)
-		response = self.session.get(url=url)
+		response = self.session.get(url=self.router.region_info(request.region_id))
 		self.validate_response(response)
+
 		return RegionInfoResponse.model_validate_json(response.text)
 
 	def get_region_children(self, request: RegionChildrenRequest) -> RegionChildrenResponse:
-		url = self.router.region_children(request.region_id)
 		response = self.session.get(
-			url=url,
-			params=request.model_dump(exclude={"region_id"}, exclude_defaults=True, by_alias=True),
+			url=self.router.region_children(request.region_id),
+			params=request.model_dump_request_params(),
 		)
 		self.validate_response(response)
+
 		return RegionChildrenResponse.model_validate_json(response.text)

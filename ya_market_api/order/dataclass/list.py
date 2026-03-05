@@ -1,12 +1,12 @@
 from ya_market_api.base.const import SellingProgramType, CurrencyType
-from ya_market_api.base.dataclass import Region, GPS
+from ya_market_api.base.dataclass import BaseRequest, Region, GPS
 from ya_market_api.order.const import (
 	OrderSourcePlatformType, OrderStatus, OrderSubstatus, PaymentMethod, PaymentType, OrderBuyerType,
 	OrderDeliveryPartnerType, OrderDeliveryType, OrderDeliveryDispatchType, OrderItemInstanceType, OrderItemTag,
 	OrderLiftType, OrderVatType, OrderDeliveryEacType,
 )
 
-from typing import ClassVar, FrozenSet, Optional, Collection, Set, Dict, Any, List
+from typing import Optional, Collection, Set, Any, List
 from datetime import time
 
 from pydantic.main import BaseModel
@@ -75,8 +75,8 @@ class Dates(BaseModel):
 		return value.to("UTC").format("YYYY-MM-DD[T]HH:mm:ss[Z]")
 
 
-class Request(BaseModel):
-	QUERY_PARAMS: ClassVar[FrozenSet[str]] = frozenset({"limit", "page_token"})
+class Request(BaseRequest):
+	QUERY_PARAMS = frozenset({"limit", "page_token"})
 	model_config = ConfigDict(arbitrary_types_allowed=True)
 
 	# query params
@@ -102,12 +102,6 @@ class Request(BaseModel):
 	waiting_for_cancellation_approve: Optional[bool] = Field(
 		default=None, serialization_alias="waitingForCancellationApprove",
 	)
-
-	def model_dump_request_params(self) -> Dict[str, Any]:
-		return self.model_dump(include=self.QUERY_PARAMS, by_alias=True, exclude_none=True, mode="json")
-
-	def model_dump_request_payload(self) -> Dict[str, Any]:
-		return self.model_dump(exclude=self.QUERY_PARAMS, by_alias=True, exclude_none=True, mode="json")
 
 
 class Paging(BaseModel):

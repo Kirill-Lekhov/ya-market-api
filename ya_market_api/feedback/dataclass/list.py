@@ -1,7 +1,7 @@
 from ya_market_api.feedback.const import ReactionStatus
-from ya_market_api.base.dataclass import BaseResponse
+from ya_market_api.base.dataclass import BaseRequest, BaseResponse
 
-from typing import Optional, Collection, FrozenSet, Dict, Any, List, ClassVar, overload
+from typing import Optional, Collection, Dict, Any, List, ClassVar, overload
 from warnings import warn
 
 from pydantic.main import BaseModel
@@ -12,8 +12,8 @@ from pydantic.functional_serializers import field_serializer
 from arrow import Arrow, get as get_arrow
 
 
-class Request(BaseModel):
-	QUERY_PARAMS: ClassVar[FrozenSet[str]] = frozenset({"limit", "page_token"})		# pydantic model_dump requires set
+class Request(BaseRequest):
+	QUERY_PARAMS = frozenset({"limit", "page_token"})		# pydantic model_dump requires set
 	S11N_ALIAS_FEEDBACK_IDS: ClassVar[str] = "feedbackIds"
 	model_config = ConfigDict(arbitrary_types_allowed=True)
 
@@ -43,6 +43,7 @@ class Request(BaseModel):
 		page_token: Optional[str] = None,
 		feedback_ids: Optional[Collection[int]] = None,
 	) -> None: ...
+
 	@overload
 	def __init__(
 		self,
@@ -55,6 +56,7 @@ class Request(BaseModel):
 		rating_values: Optional[Collection[int]] = None,
 		reaction_status: Optional[ReactionStatus] = None,
 	) -> None: ...
+
 	def __init__(
 		self,
 		*,
@@ -115,11 +117,8 @@ class Request(BaseModel):
 
 		return value.value
 
-	def model_dump_request_params(self) -> Dict[str, Any]:
-		return self.model_dump(include=self.QUERY_PARAMS, by_alias=True, exclude_none=True)
-
 	def model_dump_request_payload(self) -> Dict[str, Any]:
-		result = self.model_dump(exclude=self.QUERY_PARAMS, by_alias=True, exclude_none=True)
+		result = super().model_dump_request_payload()
 
 		if self.feedback_ids is not None and len(result) != 1:
 			warn("When using feedback_id, the other parameters will be ignored")

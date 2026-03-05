@@ -1,7 +1,7 @@
-from ya_market_api.base.dataclass import BaseResponse
+from ya_market_api.base.dataclass import BaseRequest, BaseResponse
 from ya_market_api.question.const import EntityOperationType, EntityType
 
-from typing import Optional, Dict, Any, Literal, overload
+from typing import Optional, Literal, overload
 
 from pydantic.main import BaseModel
 from pydantic.fields import Field
@@ -12,7 +12,7 @@ class EntityId(BaseModel):
 	type: EntityType
 
 
-class EntityRequest(BaseModel):
+class EntityRequest(BaseRequest):
 	operation_type: EntityOperationType = Field(serialization_alias="operationType")
 	entity_id: Optional[EntityId] = Field(default=None, serialization_alias="entityId")
 	parent_entity_id: Optional[EntityId] = Field(default=None, serialization_alias="parentEntityId")
@@ -53,9 +53,6 @@ class EntityRequest(BaseModel):
 			parent_entity_id=parent_entity_id,
 			text=text,
 		)
-
-	def model_dump_request_payload(self) -> Dict[str, Any]:
-		return self.model_dump(by_alias=True, exclude_none=True, mode="json")
 
 
 class EntityCreateResult(BaseModel):

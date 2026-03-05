@@ -1,8 +1,8 @@
-from ya_market_api.base.dataclass import BaseResponse, Votes
+from ya_market_api.base.dataclass import BaseRequest, BaseResponse, Votes
 from ya_market_api.question.const import ModerationStatus
 from ya_market_api.question.dataclass.generic import Author
 
-from typing import Optional, ClassVar, FrozenSet, Dict, Any, List
+from typing import Optional, Any, List
 
 import arrow
 from pydantic.main import BaseModel
@@ -11,8 +11,8 @@ from pydantic.config import ConfigDict
 from pydantic.functional_validators import field_validator
 
 
-class Request(BaseModel):
-	QUERY_PARAMS: ClassVar[FrozenSet[str]] = frozenset({"limit", "page_token"})
+class Request(BaseRequest):
+	QUERY_PARAMS = frozenset({"limit", "page_token"})
 
 	# query params
 	limit: Optional[int] = None
@@ -20,12 +20,6 @@ class Request(BaseModel):
 
 	# payload
 	question_id: int = Field(serialization_alias="questionId")
-
-	def model_dump_request_params(self) -> Dict[str, Any]:
-		return self.model_dump(include=self.QUERY_PARAMS, by_alias=True, exclude_none=True)
-
-	def model_dump_request_payload(self) -> Dict[str, Any]:
-		return self.model_dump(exclude=self.QUERY_PARAMS, by_alias=True, exclude_none=True)
 
 
 class Comment(BaseModel):

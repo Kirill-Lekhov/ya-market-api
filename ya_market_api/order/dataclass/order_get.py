@@ -1,5 +1,5 @@
 from ya_market_api.base.const import CurrencyType
-from ya_market_api.base.dataclass import Region, GPS
+from ya_market_api.base.dataclass import BaseRequest, Region, GPS
 from ya_market_api.base.convert import (
 	optional_str_time_to_optional_time, optional_str_date_to_optional_arrow, str_date_to_arrow,
 	optional_str_datetime_to_optional_arrow, str_datetime_to_arrow,
@@ -22,7 +22,9 @@ from pydantic.functional_validators import field_validator
 from arrow import Arrow
 
 
-class Request(BaseModel):
+class Request(BaseRequest):
+	PATH_PARAMS = frozenset({"order_id"})
+
 	order_id: int
 
 

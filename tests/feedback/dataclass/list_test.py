@@ -49,10 +49,6 @@ class TestRequest:
 		assert request.serialize_reaction_status(None) is None
 		assert request.serialize_reaction_status(ReactionStatus.ALL) == ReactionStatus.ALL.value
 
-	def test_model_dump_request_params(self):
-		request = Request(feedback_ids=[1, 2, 3], limit=50, page_token="page-token")
-		assert request.model_dump_request_params() == {"limit": 50, "page_token": "page-token"}
-
 	def test_model_dump_request_payload(self):
 		request = Request(feedback_ids=[1, 2, 3], limit=50, page_token="page-token")
 		assert request.model_dump_request_payload() == {"feedbackIds": [1, 2, 3]}

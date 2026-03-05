@@ -1,8 +1,8 @@
 from ya_market_api.chat.const import ChatContextType, ChatStatusType, ChatType, ChatContextIdentifiableType
 from ya_market_api.chat.dataclass.generic import Chat
-from ya_market_api.base.dataclass import BaseResponse
+from ya_market_api.base.dataclass import BaseRequest, BaseResponse
 
-from typing import Optional, ClassVar, FrozenSet, Set, Dict, Any, List
+from typing import Optional, Set, List
 
 from pydantic.main import BaseModel
 from pydantic.fields import Field
@@ -16,8 +16,8 @@ class ChatContext(BaseModel):
 		return hash((self.id, self.type))
 
 
-class Request(BaseModel):
-	QUERY_PARAMS: ClassVar[FrozenSet[str]] = frozenset({"limit", "page_token"})
+class Request(BaseRequest):
+	QUERY_PARAMS = frozenset({"limit", "page_token"})
 
 	# query params
 	limit: Optional[int] = Field(default=None, ge=1, le=20)
@@ -28,12 +28,6 @@ class Request(BaseModel):
 	context_types: Optional[Set[ChatContextType]] = Field(default=None, serialization_alias="contextTypes")
 	statuses: Optional[Set[ChatStatusType]] = Field(default=None, min_length=1)
 	types: Optional[Set[ChatType]] = Field(default=None, min_length=1)
-
-	def model_dump_request_params(self) -> Dict[str, Any]:
-		return self.model_dump(include=self.QUERY_PARAMS, by_alias=True, exclude_none=True, mode="json")
-
-	def model_dump_request_payload(self) -> Dict[str, Any]:
-		return self.model_dump(exclude=self.QUERY_PARAMS, by_alias=True, exclude_none=True, mode="json")
 
 
 class Paging(BaseModel):

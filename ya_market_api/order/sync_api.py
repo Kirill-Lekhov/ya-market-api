@@ -9,18 +9,18 @@ from typing import Optional
 class SyncOrderAPI(SyncAPIMixin, BaseOrderAPI):
 	@deprecated()
 	def get_order(self, request: OrderGetRequest) -> OrderGetResponse:
-		url = self.router.order_get(self.campaign_id, request.order_id)
-		response = self.session.get(url=url)
+		response = self.session.get(url=self.router.order_get(self.campaign_id, request.order_id))
 		self.validate_response(response)
+
 		return OrderGetResponse.model_validate_json(response.text)
 
 	def get_order_list(self, request: Optional[OrderListRequest] = None) -> OrderListResponse:
 		request = request or OrderListRequest()
-		url = self.router.order_list(self.business_id)
 		response = self.session.post(
-			url=url,
+			url=self.router.order_list(self.business_id),
 			params=request.model_dump_request_params(),
 			json=request.model_dump_request_payload(),
 		)
 		self.validate_response(response)
+
 		return OrderListResponse.model_validate_json(response.text)

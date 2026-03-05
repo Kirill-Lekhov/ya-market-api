@@ -1,4 +1,4 @@
-from ya_market_api.base.dataclass import BaseResponse
+from ya_market_api.base.dataclass import BaseRequest, BaseResponse
 from ya_market_api.base.const import CurrencyType, SellingProgramType
 from ya_market_api.offer.const import (
 	CatalogLanguageType, OfferCardStatusType, AgeUnit, CampaignStatusType, CommodityCodeType,
@@ -6,7 +6,7 @@ from ya_market_api.offer.const import (
 	ShowcaseType,
 )
 
-from typing import FrozenSet, Optional, Collection, List, Dict, Any, ClassVar, overload
+from typing import Optional, Collection, List, Dict, Any, ClassVar, overload
 from warnings import warn
 
 from pydantic.main import BaseModel
@@ -24,8 +24,8 @@ TagsParam = Optional[Collection[str]]
 VendorNamesParam = Optional[Collection[str]]
 
 
-class Request(BaseModel):
-	QUERY_PARAMS: ClassVar[FrozenSet[str]] = frozenset({"language", "limit", "page_token"})
+class Request(BaseRequest):
+	QUERY_PARAMS = frozenset({"language", "limit", "page_token"})
 	S11N_ALIAS_OFFER_IDS: ClassVar[str] = "offerIds"
 	model_config = ConfigDict(arbitrary_types_allowed=True)
 
@@ -46,6 +46,7 @@ class Request(BaseModel):
 
 	@overload
 	def __init__(self, *, offer_ids: Collection[str]) -> None: ...
+
 	@overload
 	def __init__(
 		self,
@@ -59,6 +60,7 @@ class Request(BaseModel):
 		tags: TagsParam = None,
 		vendor_names: VendorNamesParam = None,
 	) -> None: ...
+
 	def __init__(
 		self,
 		*,

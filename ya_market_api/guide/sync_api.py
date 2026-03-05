@@ -11,13 +11,13 @@ class SyncGuideAPI(SyncAPIMixin, BaseGuideAPI):
 		self.region = SyncGuideRegionAPI(config)
 
 	def get_token_info(self) -> TokenInfoResponse:
-		url = self.router.token_info()
-		response = self.session.post(url=url, json="")
+		response = self.session.post(url=self.router.token_info(), json="")
 		self.validate_response(response)
+
 		return TokenInfoResponse.model_validate_json(response.text)
 
 	def get_delivery_services(self) -> DeliveryServicesResponse:
-		url = self.router.delivery_services()
-		response = self.session.get(url=url)
+		response = self.session.get(url=self.router.delivery_services())
 		self.validate_response(response)
+
 		return DeliveryServicesResponse.model_validate_json(response.text)

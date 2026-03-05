@@ -11,15 +11,13 @@ class AsyncGuideAPI(AsyncAPIMixin, BaseGuideAPI):
 		self.region = AsyncGuideRegionAPI(config)
 
 	async def get_token_info(self) -> TokenInfoResponse:
-		url = self.router.token_info()
-
-		async with self.session.post(url=url, json="") as response:
+		async with self.session.post(url=self.router.token_info(), json="") as response:
 			self.validate_response(response)
+
 			return TokenInfoResponse.model_validate_json(await response.text())
 
 	async def get_delivery_services(self) -> DeliveryServicesResponse:
-		url = self.router.delivery_services()
-
-		async with self.session.get(url=url) as response:
+		async with self.session.get(url=self.router.delivery_services()) as response:
 			self.validate_response(response)
+
 			return DeliveryServicesResponse.model_validate_json(await response.text())

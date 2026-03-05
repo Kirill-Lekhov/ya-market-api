@@ -1,4 +1,4 @@
-from ya_market_api.base.dataclass import BaseResponse
+from ya_market_api.base.dataclass import BaseRequest, BaseResponse
 from ya_market_api.feedback.const import CommentStatus
 from ya_market_api.feedback.dataclass.generic import FeedbackCommentAuthor
 
@@ -13,7 +13,7 @@ class RequestComment(BaseModel):
 	text: str = Field(min_length=1)
 
 
-class Request(BaseModel):
+class Request(BaseRequest):
 	feedback_id: int = Field(serialization_alias="feedbackId")
 	comment: RequestComment
 

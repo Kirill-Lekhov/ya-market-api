@@ -8,10 +8,10 @@ from typing import Optional
 class SyncCampaignAPI(SyncAPIMixin, BaseCampaignAPI):
 	def get_campaign_list(self, request: Optional[CampaignListRequest] = None) -> CampaignListResponse:
 		request = request or CampaignListRequest()
-		url = self.router.campaign_list()
 		response = self.session.get(
-			url=url,
-			params=request.model_dump(by_alias=True, exclude_none=True),
+			url=self.router.campaign_list(),
+			params=request.model_dump_request_params(),
 		)
 		self.validate_response(response)
+
 		return CampaignListResponse.model_validate_json(response.text)

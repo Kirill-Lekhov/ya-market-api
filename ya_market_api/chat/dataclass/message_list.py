@@ -1,14 +1,14 @@
-from ya_market_api.base.dataclass import BaseResponse
+from ya_market_api.base.dataclass import BaseRequest, BaseResponse
 from ya_market_api.chat.dataclass.generic import ChatFullContext, ChatMessage
 
-from typing import ClassVar, FrozenSet, Optional, Dict, Any, List
+from typing import Optional, List
 
 from pydantic.main import BaseModel
 from pydantic.fields import Field
 
 
-class Request(BaseModel):
-	QUERY_PARAMS: ClassVar[FrozenSet[str]] = frozenset({"chat_id", "limit", "page_token"})
+class Request(BaseRequest):
+	QUERY_PARAMS = frozenset({"chat_id", "limit", "page_token"})
 
 	# query params
 	chat_id: int = Field(ge=1, serialization_alias="chatId")
@@ -17,12 +17,6 @@ class Request(BaseModel):
 
 	# payload
 	message_id_from: Optional[int] = Field(default=None, serialization_alias="messageIdFrom")
-
-	def model_dump_request_params(self) -> Dict[str, Any]:
-		return self.model_dump(include=self.QUERY_PARAMS, by_alias=True, exclude_none=True)
-
-	def model_dump_request_payload(self) -> Dict[str, Any]:
-		return self.model_dump(exclude=self.QUERY_PARAMS, by_alias=True, exclude_none=True)
 
 
 class Paging(BaseModel):

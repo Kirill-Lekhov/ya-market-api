@@ -1,8 +1,8 @@
 from ya_market_api.question.const import QuestionSortOrderType
 from ya_market_api.question.dataclass.generic import Author
-from ya_market_api.base.dataclass import BaseResponse, Votes
+from ya_market_api.base.dataclass import BaseRequest, BaseResponse, Votes
 
-from typing import ClassVar, FrozenSet, Optional, Set, Dict, Any, List
+from typing import Optional, Set, Any, List
 
 import arrow
 from pydantic.main import BaseModel
@@ -12,8 +12,8 @@ from pydantic.functional_serializers import field_serializer
 from pydantic.functional_validators import field_validator
 
 
-class Request(BaseModel):
-	QUERY_PARAMS: ClassVar[FrozenSet[str]] = frozenset({"limit", "page_token"})
+class Request(BaseRequest):
+	QUERY_PARAMS = frozenset({"limit", "page_token"})
 	model_config = ConfigDict(arbitrary_types_allowed=True)
 
 	# query params
@@ -33,12 +33,6 @@ class Request(BaseModel):
 			return None
 
 		return value.date().isoformat()
-
-	def model_dump_request_params(self) -> Dict[str, Any]:
-		return self.model_dump(include=self.QUERY_PARAMS, by_alias=True, exclude_none=True, mode="json")
-
-	def model_dump_request_payload(self) -> Dict[str, Any]:
-		return self.model_dump(exclude=self.QUERY_PARAMS, by_alias=True, exclude_none=True, mode="json")
 
 
 class QuestionIdentifiers(BaseModel):

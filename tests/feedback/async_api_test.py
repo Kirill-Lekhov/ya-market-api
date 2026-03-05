@@ -35,7 +35,7 @@ class TestAsyncFeedbackAPI:
 				assert await api.get_feedback_list(request) == "DESERIALIZED DATA"
 				assert session.last_call_method == "POST"
 				assert session.last_call_url == api.router.feedback_list(1)
-				assert session.last_call_json == {"feedbackIds": (1, 2, 3)}
+				assert session.last_call_json == {"feedbackIds": [1, 2, 3]}
 				assert session.last_call_params == {"limit": 50, "page_token": "page-token"}
 
 	@pytest.mark.asyncio()
@@ -55,7 +55,7 @@ class TestAsyncFeedbackAPI:
 				validate_response_mock.assert_called_once_with(session.response)
 				assert session.last_call_method == "POST"
 				assert session.last_call_url == api.router.feedback_comment_list(1)
-				assert session.last_call_json == {"commentIds": (1, 2, 3)}
+				assert session.last_call_json == {"commentIds": [1, 2, 3]}
 				assert session.last_call_params == {"limit": 50, "page_token": "page-token"}
 
 	@pytest.mark.asyncio()
@@ -132,4 +132,4 @@ class TestAsyncFeedbackAPI:
 				validate_response_mock.assert_called_once_with(session.response)
 				assert session.last_call_method == "POST"
 				assert session.last_call_url == api.router.feedback_reaction_skip(1)
-				assert session.last_call_json == {"feedbackIds": (1, 2, 3)}
+				assert session.last_call_json == {"feedbackIds": [1, 2, 3]}

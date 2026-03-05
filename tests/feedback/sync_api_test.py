@@ -33,7 +33,7 @@ class TestSyncFeedbackAPI:
 				session.post.assert_called_once_with(
 					url=api.router.feedback_list(1),
 					params={"limit": 50, "page_token": "page-token"},
-					json={"feedbackIds": (1, 2, 3)},
+					json={"feedbackIds": [1, 2, 3]},
 				)
 
 	def test_get_feedback_comment_list(self):
@@ -56,7 +56,7 @@ class TestSyncFeedbackAPI:
 				session.post.assert_called_once_with(
 					url=api.router.feedback_comment_list(1),
 					params={"limit": 50, "page_token": "page-token"},
-					json={"commentIds": (1, 2, 3)},
+					json={"commentIds": [1, 2, 3]},
 				)
 
 	def test_add_feedback_comment(self):
@@ -144,5 +144,5 @@ class TestSyncFeedbackAPI:
 				validate_response_mock.assert_called_once_with(session.post.return_value)
 				session.post.assert_called_once_with(
 					url=api.router.feedback_reaction_skip(1),
-					json={"feedbackIds": (1, 2, 3)},
+					json={"feedbackIds": [1, 2, 3]},
 				)

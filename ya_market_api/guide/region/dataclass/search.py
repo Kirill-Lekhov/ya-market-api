@@ -1,4 +1,4 @@
-from ya_market_api.base.dataclass.region import Region
+from ya_market_api.base.dataclass import BaseRequest, Region
 
 from typing import Optional, List
 
@@ -6,10 +6,12 @@ from pydantic.main import BaseModel
 from pydantic.fields import Field
 
 
-class Request(BaseModel):
+class Request(BaseRequest):
+	QUERY_PARAMS = frozenset({"name", "limit", "page_token"})
+
 	name: str
 	limit: Optional[int] = None
-	page_token: Optional[str] = None
+	page_token: Optional[str] = Field(default=None, serialization_alias="pageToken")
 
 
 class ResponsePaging(BaseModel):

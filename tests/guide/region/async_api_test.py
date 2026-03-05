@@ -44,7 +44,7 @@ class TestAsyncGuideRegionAPI:
 				validate_response_mock.assert_called_once_with(session.response)
 				assert session.last_call_method == "GET"
 				assert session.last_call_url == api.router.region_search()
-				assert session.last_call_params == {"name": "REGION_NAME", "limit": 100, "page_token": "PAGE_TOKEN"}
+				assert session.last_call_params == {"name": "REGION_NAME", "limit": 100, "pageToken": "PAGE_TOKEN"}
 
 	@pytest.mark.asyncio()
 	async def test_get_region_info(self):

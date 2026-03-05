@@ -1,4 +1,4 @@
-from ya_market_api.base.dataclass import FlippingPager, Region
+from ya_market_api.base.dataclass import BaseRequest, FlippingPager, Region
 
 from typing import Optional
 
@@ -7,7 +7,10 @@ from pydantic.fields import Field
 from pydantic.functional_validators import field_validator
 
 
-class Request(BaseModel):
+class Request(BaseRequest):
+	QUERY_PARAMS = frozenset({"page", "page_size"})
+	PATH_PARAMS = frozenset({"region_id"})
+
 	region_id: int
 	page: Optional[int] = None
 	page_size: Optional[int] = Field(default=None, serialization_alias="pageSize")
