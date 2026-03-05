@@ -2,7 +2,7 @@ from ya_market_api.base.async_api_mixin import AsyncAPIMixin
 from ya_market_api.feedback.base_api import BaseFeedbackAPI
 from ya_market_api.feedback.dataclass import (
 	FeedbackListRequest, FeedbackListResponse, FeedbackCommentListRequest, FeedbackCommentListResponse,
-	FeedbackCommentAddRequest, FeedbackCommentAddResponse, FeedbackCommentUpdateRequest, FeedbackCommentUpdateResponse,
+	FeedbackCommentCreateRequest, FeedbackCommentCreateResponse, FeedbackCommentUpdateRequest, FeedbackCommentUpdateResponse,
 	FeedbackCommentDeleteRequest, FeedbackCommentDeleteResponse, FeedbackReactionSkipRequest,
 	FeedbackReactionSkipResponse,
 )
@@ -31,13 +31,13 @@ class AsyncFeedbackAPI(AsyncAPIMixin, BaseFeedbackAPI):
 			self.validate_response(response)
 			return FeedbackCommentListResponse.model_validate_json(await response.text())
 
-	async def add_feedback_comment(self, request: FeedbackCommentAddRequest) -> FeedbackCommentAddResponse:
+	async def create_feedback_comment(self, request: FeedbackCommentCreateRequest) -> FeedbackCommentCreateResponse:
 		async with self.session.post(
 			url=self.router.feedback_comment_add(self.business_id),
 			json=request.model_dump_request_payload(),
 		) as response:
 			self.validate_response(response)
-			return FeedbackCommentAddResponse.model_validate_json(await response.text())
+			return FeedbackCommentCreateResponse.model_validate_json(await response.text())
 
 	async def update_feedback_comment(self, request: FeedbackCommentUpdateRequest) -> FeedbackCommentUpdateResponse:
 		async with self.session.post(

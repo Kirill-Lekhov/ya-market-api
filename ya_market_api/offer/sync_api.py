@@ -6,7 +6,10 @@ from typing import Optional
 
 
 class SyncOfferAPI(SyncAPIMixin, BaseOfferAPI):
-	def get_offer_list_by_business(self, request: Optional[OfferListByBusinessRequest] = None) -> OfferListByBusinessResponse:
+	def get_offer_list_by_business(
+		self,
+		request: Optional[OfferListByBusinessRequest] = None,
+	) -> OfferListByBusinessResponse:
 		request = request or OfferListByBusinessRequest()
 		response = self.session.post(
 			url=self.router.offer_list_by_business(self.business_id),

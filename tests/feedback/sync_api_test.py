@@ -1,6 +1,6 @@
 from ya_market_api.feedback.sync_api import SyncFeedbackAPI
 from ya_market_api.feedback.dataclass import (
-	FeedbackListRequest, FeedbackCommentListRequest, FeedbackCommentAddRequest, FeedbackCommentUpdateRequest,
+	FeedbackListRequest, FeedbackCommentListRequest, FeedbackCommentCreateRequest, FeedbackCommentUpdateRequest,
 	FeedbackCommentDeleteRequest, FeedbackReactionSkipRequest,
 )
 from ya_market_api.base.sync_config import SyncConfig
@@ -59,22 +59,22 @@ class TestSyncFeedbackAPI:
 					json={"commentIds": [1, 2, 3]},
 				)
 
-	def test_add_feedback_comment(self):
+	def test_create_feedback_comment(self):
 		session = Mock()
 		session.post = Mock()
 		session.post.return_value = Mock()
 		session.post.return_value.text = "RAW DATA"
 		config = SyncConfig(session, "", business_id=1)
 		api = SyncFeedbackAPI(config)
-		request = FeedbackCommentAddRequest.create(512, "COMMENT", 1024)
+		request = FeedbackCommentCreateRequest.create(512, "COMMENT", 1024)
 
-		with patch("ya_market_api.feedback.sync_api.FeedbackCommentAddResponse") as FeedbackCommentAddResponseMock:
-			FeedbackCommentAddResponseMock.model_validate_json = Mock()
-			FeedbackCommentAddResponseMock.model_validate_json.return_value = "DESERIALIZED DATA"
+		with patch("ya_market_api.feedback.sync_api.FeedbackCommentCreateResponse") as FeedbackCommentCreateResponseMock:
+			FeedbackCommentCreateResponseMock.model_validate_json = Mock()
+			FeedbackCommentCreateResponseMock.model_validate_json.return_value = "DESERIALIZED DATA"
 
 			with patch.object(api, "validate_response") as validate_response_mock:
-				assert api.add_feedback_comment(request) == "DESERIALIZED DATA"
-				FeedbackCommentAddResponseMock.model_validate_json.assert_called_once_with("RAW DATA")
+				assert api.create_feedback_comment(request) == "DESERIALIZED DATA"
+				FeedbackCommentCreateResponseMock.model_validate_json.assert_called_once_with("RAW DATA")
 				validate_response_mock.assert_called_once_with(session.post.return_value)
 				session.post.assert_called_once_with(
 					url=api.router.feedback_comment_add(1),

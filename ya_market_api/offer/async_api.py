@@ -6,7 +6,10 @@ from typing import Optional
 
 
 class AsyncOfferAPI(AsyncAPIMixin, BaseOfferAPI):
-	async def get_offer_list_by_business(self, request: Optional[OfferListByBusinessRequest] = None) -> OfferListByBusinessResponse:
+	async def get_offer_list_by_business(
+		self,
+		request: Optional[OfferListByBusinessRequest] = None,
+	) -> OfferListByBusinessResponse:
 		request = request or OfferListByBusinessRequest()
 
 		async with self.session.post(

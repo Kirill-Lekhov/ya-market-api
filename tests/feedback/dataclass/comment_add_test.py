@@ -1,4 +1,4 @@
-from ya_market_api.feedback.dataclass.comment_add import Request, RequestComment
+from ya_market_api.feedback.dataclass.comment_create import Request, RequestComment
 
 
 class TestRequest:

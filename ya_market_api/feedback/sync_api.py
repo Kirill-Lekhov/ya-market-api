@@ -2,7 +2,7 @@ from ya_market_api.base.sync_api_mixin import SyncAPIMixin
 from ya_market_api.feedback.base_api import BaseFeedbackAPI
 from ya_market_api.feedback.dataclass import (
 	FeedbackListRequest, FeedbackListResponse, FeedbackCommentListRequest, FeedbackCommentListResponse,
-	FeedbackCommentAddRequest, FeedbackCommentAddResponse, FeedbackCommentUpdateRequest, FeedbackCommentUpdateResponse,
+	FeedbackCommentCreateRequest, FeedbackCommentCreateResponse, FeedbackCommentUpdateRequest, FeedbackCommentUpdateResponse,
 	FeedbackCommentDeleteRequest, FeedbackCommentDeleteResponse, FeedbackReactionSkipRequest,
 	FeedbackReactionSkipResponse,
 )
@@ -32,14 +32,14 @@ class SyncFeedbackAPI(SyncAPIMixin, BaseFeedbackAPI):
 
 		return FeedbackCommentListResponse.model_validate_json(response.text)
 
-	def add_feedback_comment(self, request: FeedbackCommentAddRequest) -> FeedbackCommentAddResponse:
+	def create_feedback_comment(self, request: FeedbackCommentCreateRequest) -> FeedbackCommentCreateResponse:
 		response = self.session.post(
 			url=self.router.feedback_comment_add(self.business_id),
 			json=request.model_dump_request_payload(),
 		)
 		self.validate_response(response)
 
-		return FeedbackCommentAddResponse.model_validate_json(response.text)
+		return FeedbackCommentCreateResponse.model_validate_json(response.text)
 
 	def update_feedback_comment(self, request: FeedbackCommentUpdateRequest) -> FeedbackCommentUpdateResponse:
 		response = self.session.post(

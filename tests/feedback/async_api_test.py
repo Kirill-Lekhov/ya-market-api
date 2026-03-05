@@ -1,7 +1,7 @@
 from tests.fake_async_session import FakeAsyncSession
 from ya_market_api.feedback.async_api import AsyncFeedbackAPI
 from ya_market_api.feedback.dataclass import (
-	FeedbackListRequest, FeedbackCommentListRequest, FeedbackCommentAddRequest, FeedbackCommentUpdateRequest,
+	FeedbackListRequest, FeedbackCommentListRequest, FeedbackCommentCreateRequest, FeedbackCommentUpdateRequest,
 	FeedbackCommentDeleteRequest, FeedbackReactionSkipRequest,
 )
 from ya_market_api.base.async_config import AsyncConfig
@@ -59,19 +59,19 @@ class TestAsyncFeedbackAPI:
 				assert session.last_call_params == {"limit": 50, "page_token": "page-token"}
 
 	@pytest.mark.asyncio()
-	async def test_add_feedback_comment(self):
+	async def test_create_feedback_comment(self):
 		session = FakeAsyncSession("RAW DATA")
 		config = AsyncConfig(session, "", business_id=1)		# type: ignore - for testing purposes
 		api = AsyncFeedbackAPI(config)
-		request = FeedbackCommentAddRequest.create(512, "COMMENT", 1024)
+		request = FeedbackCommentCreateRequest.create(512, "COMMENT", 1024)
 
-		with patch("ya_market_api.feedback.async_api.FeedbackCommentAddResponse") as FeedbackCommentAddResponse:
-			FeedbackCommentAddResponse.model_validate_json = Mock()
-			FeedbackCommentAddResponse.model_validate_json.return_value = "DESERIALIZED DATA"
+		with patch("ya_market_api.feedback.async_api.FeedbackCommentCreateResponse") as FeedbackCommentCreateResponse:
+			FeedbackCommentCreateResponse.model_validate_json = Mock()
+			FeedbackCommentCreateResponse.model_validate_json.return_value = "DESERIALIZED DATA"
 
 			with patch.object(api, "validate_response") as validate_response_mock:
-				assert await api.add_feedback_comment(request) == "DESERIALIZED DATA"
-				FeedbackCommentAddResponse.model_validate_json.assert_called_once_with("RAW DATA")
+				assert await api.create_feedback_comment(request) == "DESERIALIZED DATA"
+				FeedbackCommentCreateResponse.model_validate_json.assert_called_once_with("RAW DATA")
 				validate_response_mock.assert_called_once_with(session.response)
 				assert session.last_call_method == "POST"
 				assert session.last_call_url == api.router.feedback_comment_add(1)
