@@ -262,7 +262,7 @@ class OrderDelivery(BaseModel):
 
 
 class Currency(BaseModel):
-	currency_id: CurrencyType = Field(serialization_alias="currencyId")
+	currency_id: CurrencyType = Field(validation_alias="currencyId")
 	value: float
 
 
