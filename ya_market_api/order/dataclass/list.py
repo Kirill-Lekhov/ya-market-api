@@ -1,5 +1,5 @@
 from ya_market_api.base.const import SellingProgramType, CurrencyType
-from ya_market_api.base.dataclass import BaseRequest, Region, GPS
+from ya_market_api.base.dataclass import BaseRequest, Region, GPS, Paging
 from ya_market_api.order.const import (
 	OrderSourcePlatformType, OrderStatus, OrderSubstatus, PaymentMethod, PaymentType, OrderBuyerType,
 	OrderDeliveryPartnerType, OrderDeliveryType, OrderDeliveryDispatchType, OrderItemInstanceType, OrderItemTag,
@@ -102,10 +102,6 @@ class Request(BaseRequest):
 	waiting_for_cancellation_approve: Optional[bool] = Field(
 		default=None, serialization_alias="waitingForCancellationApprove",
 	)
-
-
-class Paging(BaseModel):
-	next_page_token: Optional[str] = Field(default=None, validation_alias="nextPageToken")
 
 
 class OrderDeliveryDates(BaseModel):

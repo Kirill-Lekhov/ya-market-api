@@ -1,5 +1,5 @@
 from ya_market_api.feedback.const import ReactionStatus
-from ya_market_api.base.dataclass import BaseRequest, BaseResponse
+from ya_market_api.base.dataclass import BaseRequest, BaseResponse, Paging
 
 from typing import Optional, Collection, Dict, Any, List, ClassVar, overload
 from warnings import warn
@@ -169,10 +169,6 @@ class Feedback(BaseModel):
 			raise ValueError("Raw value must be of str type")
 
 		return get_arrow(value)
-
-
-class Paging(BaseModel):
-	next_page_token: Optional[str] = Field(default=None, validation_alias="nextPageToken")
 
 
 class ResponseResult(BaseModel):

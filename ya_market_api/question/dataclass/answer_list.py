@@ -1,4 +1,4 @@
-from ya_market_api.base.dataclass import BaseRequest, BaseResponse, Votes
+from ya_market_api.base.dataclass import BaseRequest, BaseResponse, Votes, Paging
 from ya_market_api.question.const import ModerationStatus
 from ya_market_api.question.dataclass.generic import Author
 
@@ -58,10 +58,6 @@ class Answer(BaseModel):
 	@classmethod
 	def validate_datetimes(cls, value: Any) -> arrow.Arrow:
 		return arrow.get(value)
-
-
-class Paging(BaseModel):
-	next_page_token: Optional[str] = Field(default=None, validation_alias="nextPageToken")
 
 
 class Result(BaseModel):

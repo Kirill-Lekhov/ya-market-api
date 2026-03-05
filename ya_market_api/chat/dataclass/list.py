@@ -1,6 +1,6 @@
 from ya_market_api.chat.const import ChatContextType, ChatStatusType, ChatType, ChatContextIdentifiableType
 from ya_market_api.chat.dataclass.generic import Chat
-from ya_market_api.base.dataclass import BaseRequest, BaseResponse
+from ya_market_api.base.dataclass import BaseRequest, BaseResponse, Paging
 
 from typing import Optional, Set, List
 
@@ -28,10 +28,6 @@ class Request(BaseRequest):
 	context_types: Optional[Set[ChatContextType]] = Field(default=None, serialization_alias="contextTypes")
 	statuses: Optional[Set[ChatStatusType]] = Field(default=None, min_length=1)
 	types: Optional[Set[ChatType]] = Field(default=None, min_length=1)
-
-
-class Paging(BaseModel):
-	next_page_token: Optional[str] = Field(default=None, validation_alias="nextPageToken")
 
 
 class Result(BaseModel):

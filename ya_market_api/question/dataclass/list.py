@@ -1,6 +1,6 @@
 from ya_market_api.question.const import QuestionSortOrderType
 from ya_market_api.question.dataclass.generic import Author
-from ya_market_api.base.dataclass import BaseRequest, BaseResponse, Votes
+from ya_market_api.base.dataclass import BaseRequest, BaseResponse, Votes, Paging
 
 from typing import Optional, Set, Any, List
 
@@ -55,10 +55,6 @@ class Question(BaseModel):
 	@classmethod
 	def validate_datetimes(cls, value: Any) -> arrow.Arrow:
 		return arrow.get(value)
-
-
-class Paging(BaseModel):
-	next_page_token: Optional[str] = Field(default=None, validation_alias="nextPageToken")
 
 
 class Result(BaseModel):

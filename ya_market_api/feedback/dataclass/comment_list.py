@@ -1,4 +1,4 @@
-from ya_market_api.base.dataclass import BaseRequest, BaseResponse
+from ya_market_api.base.dataclass import BaseRequest, BaseResponse, Paging
 from ya_market_api.feedback.const import CommentStatus
 from ya_market_api.feedback.dataclass.generic import FeedbackCommentAuthor
 
@@ -82,10 +82,6 @@ class FeedbackComment(BaseModel):
 	text: str
 	can_modify: Optional[bool] = Field(default=None, validation_alias="canModify")
 	parent_id: Optional[int] = Field(default=None, validation_alias="parentId")
-
-
-class Paging(BaseModel):
-	next_page_token: Optional[str] = Field(default=None, validation_alias="nextPageToken")
 
 
 class Result(BaseModel):

@@ -1,4 +1,4 @@
-from ya_market_api.base.dataclass import BaseRequest, BaseResponse
+from ya_market_api.base.dataclass import BaseRequest, BaseResponse, Paging
 from ya_market_api.chat.dataclass.generic import ChatFullContext, ChatMessage
 
 from typing import Optional, List
@@ -17,10 +17,6 @@ class Request(BaseRequest):
 
 	# payload
 	message_id_from: Optional[int] = Field(default=None, serialization_alias="messageIdFrom")
-
-
-class Paging(BaseModel):
-	next_page_token: Optional[str] = Field(default=None, validation_alias="nextPageToken")
 
 
 class Result(BaseModel):
