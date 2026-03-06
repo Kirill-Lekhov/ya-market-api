@@ -163,16 +163,16 @@ See signature of the FeedbackCommentListRequest class and the docs to get info a
 
 Docs: https://yandex.ru/dev/market/partner-api/doc/ru/reference/goods-feedback/getGoodsFeedbackComments
 
-### Add feedback comment
+### Create feedback comment
 ```python
 # Sync mode
 from ya_market_api.sync_api import SyncAPI
-from ya_market_api.feedback.dataclass import FeedbackCommentAddRequest
+from ya_market_api.feedback.dataclass import FeedbackCommentCreateRequest
 
 
 api = SyncAPI.build(...)
-request = FeedbackCommentAddRequest.create(feedback_id=512, text="COMMENT_TEXT", parent_id=1024)
-response = api.feedback.add_feedback_comment(request)
+request = FeedbackCommentCreateRequest.create(feedback_id=512, text="COMMENT_TEXT", parent_id=1024)
+response = api.feedback.create_feedback_comment(request)
 ```
 
 Docs: https://yandex.ru/dev/market/partner-api/doc/ru/reference/goods-feedback/updateGoodsFeedbackComment
@@ -254,7 +254,7 @@ response = api.campaign.get_campaign_list(request)
 Docs: https://yandex.ru/dev/market/partner-api/doc/ru/reference/campaigns/getCampaigns
 
 ## Order API
-### Get order
+### (DEPRECATED) ~~Get order~~
 ```python
 # Sync mode
 from ya_market_api.sync_api import SyncAPI
@@ -267,3 +267,181 @@ response = api.order.get_order(request)
 ```
 
 Docs: https://yandex.ru/dev/market/partner-api/doc/ru/reference/orders/getOrder
+
+### Get orders
+```python
+# Sync mode
+from ya_market_api.sync_api import SyncAPI
+from ya_market_api.order.dataclass import OrderListRequest
+
+
+api = SyncAPI.build(...)
+request = OrderListRequest(order_ids={...})
+response = api.order.get_order_list(request)
+```
+
+Docs: https://yandex.ru/dev/market/partner-api/doc/ru/reference/orders/getBusinessOrders
+
+## Question API
+### Get question list
+```python
+# Sync mode
+from ya_market_api.sync_api import SyncAPI
+from ya_market_api.question.dataclass import QuestionListRequest
+
+
+api = SyncAPI.build(...)
+response = api.question.get_question_list()
+# OR
+request = QuestionListRequest(...)
+response = api.question.get_question_list(request)
+```
+
+Docs: https://yandex.ru/dev/market/partner-api/doc/ru/reference/goods-questions/getGoodsQuestions
+
+### Get question answer list
+```python
+# Sync mode
+from ya_market_api.sync_api import SyncAPI
+from ya_market_api.question.dataclass import QuestionAnswerListRequest
+
+
+api = SyncAPI.build(...)
+request = QuestionAnswerListRequest(...)
+response = api.question.get_question_answer_list(request)
+```
+
+Docs: https://yandex.ru/dev/market/partner-api/doc/ru/reference/goods-questions/getGoodsQuestionAnswers
+
+### Create question answer
+```python
+# Sync mode
+from ya_market_api.sync_api import SyncAPI
+from ya_market_api.question.dataclass import QuestionAnswerCreateRequest
+
+
+api = SyncAPI.build(...)
+request = QuestionAnswerCreateRequest(question_id=..., text=...)
+response = api.question.create_question_answer(request)
+```
+
+Docs: https://yandex.ru/dev/market/partner-api/doc/ru/reference/goods-questions/updateGoodsQuestionTextEntity
+
+### Update question answer
+```python
+# Sync mode
+from ya_market_api.sync_api import SyncAPI
+from ya_market_api.question.dataclass import QuestionAnswerUpdateRequest
+
+
+api = SyncAPI.build(...)
+request = QuestionAnswerUpdateRequest(answer_id=..., text=...)
+response = api.question.update_question_answer(request)
+```
+
+Docs: https://yandex.ru/dev/market/partner-api/doc/ru/reference/goods-questions/updateGoodsQuestionTextEntity
+
+### Delete question answer
+```python
+# Sync mode
+from ya_market_api.sync_api import SyncAPI
+from ya_market_api.question.dataclass import QuestionAnswerDeleteRequest
+
+
+api = SyncAPI.build(...)
+request = QuestionAnswerDeleteRequest(answer_id=...)
+response = api.question.delete_question_answer(request)
+```
+
+Docs: https://yandex.ru/dev/market/partner-api/doc/ru/reference/goods-questions/updateGoodsQuestionTextEntity
+
+## Chat API
+### Get chat list
+```python
+# Sync mode
+from ya_market_api.sync_api import SyncAPI
+from ya_market_api.chat.dataclass import ChatListRequest
+
+
+api = SyncAPI.build(...)
+response = api.chat.get_chat_list()
+# OR
+request = ChatListRequest(...)
+response = api.chat.get_chat_list(request)
+```
+
+Docs: https://yandex.ru/dev/market/partner-api/doc/ru/reference/chats/getChats
+
+### Get chat
+```python
+# Sync mode
+from ya_market_api.sync_api import SyncAPI
+from ya_market_api.chat.dataclass import ChatGetRequest
+
+
+api = SyncAPI.build(...)
+request = ChatGetRequest(chat_id=...)
+response = api.chat.get_chat(request)
+```
+
+Docs: https://yandex.ru/dev/market/partner-api/doc/ru/reference/chats/getChat
+
+### Get chat message list
+```python
+# Sync mode
+from ya_market_api.sync_api import SyncAPI
+from ya_market_api.chat.dataclass import ChatMessageListRequest
+
+
+api = SyncAPI.build(...)
+request = ChatMessageListRequest(chat_id=...)
+response = api.chat.get_chat_message_list(request)
+```
+
+Docs: https://yandex.ru/dev/market/partner-api/doc/ru/reference/chats/getChatHistory
+
+### Get chat message
+```python
+# Sync mode
+from ya_market_api.sync_api import SyncAPI
+from ya_market_api.chat.dataclass import ChatMessageGetRequest
+
+
+api = SyncAPI.build(...)
+request = ChatMessageGetRequest(chat_id=..., message_id=...)
+response = api.chat.get_chat_message(request)
+```
+
+Docs: https://yandex.ru/dev/market/partner-api/doc/ru/reference/chats/getChatMessage
+
+### Create chat text-message
+```python
+# Sync mode
+from ya_market_api.sync_api import SyncAPI
+from ya_market_api.chat.dataclass import ChatMessageCreateTextRequest
+
+
+api = SyncAPI.build(...)
+request = ChatMessageCreateTextRequest(chat_id=..., message=...)
+response = api.chat.create_chat_message_text(request)
+```
+
+Docs: https://yandex.ru/dev/market/partner-api/doc/ru/reference/chats/sendMessageToChat
+
+### Create chat file-message
+```python
+# Sync mode
+from ya_market_api.sync_api import SyncAPI
+from ya_market_api.chat.dataclass import ChatMessageCreateFileRequest
+
+
+api = SyncAPI.build(...)
+
+with open(".../image.png", mode="rb") as file:
+	file_content = file.read()
+
+request = ChatMessageCreateFileRequest(chat_id=..., file=file_content)
+response = api.chat.create_chat_message_file(request)
+```
+
+Docs: https://yandex.ru/dev/market/partner-api/doc/ru/reference/chats/sendFileToChat
