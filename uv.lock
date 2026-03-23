@@ -1860,7 +1860,7 @@ wheels = [
 
 [[package]]
 name = "ya-market-api"
-version = "2.0.1"
+version = "3.0.0rc0"
 source = { editable = "." }
 dependencies = [
     { name = "arrow" },
