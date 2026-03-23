@@ -130,6 +130,7 @@ class Request(BaseRequest):
 class FeedbackIdentifiers(BaseModel):
 	model_id: Optional[int] = Field(default=None, validation_alias="modelId", deprecated=True)
 	order_id: Optional[int] = Field(default=None, validation_alias="orderId")
+	offer_id: Optional[str] = Field(default=None, min_length=1, max_length=255, validation_alias="offerId")
 
 
 class FeedbackStatistics(BaseModel):
